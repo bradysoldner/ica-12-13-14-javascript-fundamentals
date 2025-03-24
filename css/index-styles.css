@@ -1,0 +1,82 @@
+:root {
+	--primary: #0d6efd;
+	--primary-dark: #0b5ed7;
+	--secondary: #6c757d;
+	--light: #f8f9fa;
+	--dark: #212529;
+}
+
+body {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	line-height: 1.6;
+	color: var(--dark);
+	background-color: var(--light);
+}
+
+header {
+	background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+	color: white;
+	padding: 3rem 0;
+	margin-bottom: 2rem;
+    position: relative;
+}
+
+header #old-site-link {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+.card {
+	transition: transform 0.3s, box-shadow 0.3s;
+	height: 100%;
+}
+
+.card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+	font-size: 2.5rem;
+	margin-bottom: 1rem;
+	color: var(--primary);
+}
+
+.session-card {
+	border-left: 5px solid var(--primary);
+	margin-bottom: 1.5rem;
+	transition: transform 0.3s;
+}
+
+.session-card:hover {
+	transform: translateX(5px);
+}
+
+.footer {
+	background-color: var(--dark);
+	color: white;
+	padding: 2rem 0;
+	margin-top: 3rem;
+}
+
+.resource-list {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.resource-list li {
+	padding: 0.5rem 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.resource-list li a {
+	color: #8bb9fe;
+	text-decoration: none;
+}
+
+.resource-list li a:hover {
+	color: white;
+	text-decoration: underline;
+}
