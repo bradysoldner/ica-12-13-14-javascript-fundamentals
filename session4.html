@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 4: Loops & Advanced DOM Interaction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" tabindex="0">
+    <button id="back-to-top" class="btn btn-primary rounded-circle" onclick="scrollToTop()">↑</button>
+
+    <header class="text-center">
+        <div class="container">
+            <h1 class="display-5">Session 4: Loops & Advanced DOM Interaction</h1>
+            <p class="lead">Master iteration techniques, working with objects, and managing dynamic content</p>
+            <div class="mt-3">
+                <a href="session3.html" class="btn btn-outline-light btn-sm me-2">← Previous Session</a>
+                <a href="index.html" class="btn btn-outline-light btn-sm me-2">Course Home</a>
+                <a href="#" class="btn btn-secondary btn-sm">Next Session → (coming soon)</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <!-- Progress tracker / Table of contents -->
+            <div class="col-md-3">
+                <div class="progress-tracker">
+                    <h5>In This Session</h5>
+                    <nav id="navbar-example3" class="navbar bg-light flex-column align-items-stretch p-3 rounded mb-4">
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link" href="#forEach-method">Array forEach Method</a>
+                            <a class="nav-link" href="#for-of-loops">For...of Loops <span class="optional-tag">Optional</span></a>
+                            <a class="nav-link" href="#objects">JavaScript Objects</a>
+                            <a class="nav-link" href="#object-methods">Object Methods</a>
+                            <a class="nav-link" href="#traversing-objects">Traversing Objects</a>
+                            <a class="nav-link" href="#classList">Working with classList</a>
+                            <a class="nav-link" href="#event-delegation">Event Delegation <span class="optional-tag">Optional</span></a>
+                            <a class="nav-link" href="#form-handling">Form Data Handling</a>
+                            <a class="nav-link" href="#grocery-project">Grocery Project - Part 3</a>
+                            <a class="nav-link" href="#practice-exercises">Practice Exercises</a>
+                            <a class="nav-link" href="#session-summary">Session Summary</a>
+                        </nav>
+                    </nav>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Learning Objectives</h5>
+                            <ul class="mb-0">
+                                <li>Use forEach to iterate through arrays</li>
+                                <li>Use for...of loops to iterate over iterable objects</li>
+                                <li>Create and work with JavaScript objects</li>
+                                <li>Use Object.keys() and Object.values() to access object data</li>
+                                <li>Dynamically modify element classes with classList</li>
+                                <li>Implement event delegation for dynamic elements</li>
+                                <li>Work with form data effectively</li>
+                                <li>Continue building the grocery list application</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="col-md-9">
+                <div id="content" class="scrollspy-example rounded-2" tabindex="0">
+                    <!-- forEach Method section -->
+                    <section id="forEach-method" class="mb-5">
+                        <h2>Array forEach Method</h2>
+                        <p class="lead">Using the forEach method to execute a function for each array element.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">What is the forEach Method?</h5>
+                                <p>The <code>forEach()</code> method executes a provided function once for each array element. It's a cleaner alternative to traditional for loops when you need to perform an operation on each item in an array.</p>
+                                <p>Unlike other array methods like <code>map()</code> or <code>filter()</code>,
+                                    <code>forEach()</code> always returns <code>undefined</code> and can't be chained with other methods. It's primarily used for its side effects (like modifying the DOM or logging).
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="code-block">
+                            <span class="keyword">const</span> <span class="variable">numbers</span> = [<span
+                                class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];
+
+                            <br>
+                            <span class="comment">// Using forEach to log each number</span>
+                            <span class="variable">numbers</span>.<span class="function">forEach</span>(<span class="keyword">function</span>(<span class="variable">number</span>) {
+                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">number</span>);
+                            });
+
+                            <br>
+                            <span class="comment">// Same thing with arrow function (more concise)</span>
+                            <span class="variable">numbers</span>.<span class="function">forEach</span>(<span
+                                class="variable">number</span> => <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">number</span>));
+                        </div>
+
+                        <div class="demo-section mt-4">
+                            <h3 class="mb-3">forEach Method in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Fruit List Example</h5>
+                                            <p>Click the button to display each fruit in the list:</p>
+                                            <div id="fruit-list" class="list-group mb-3"></div>
+                                            <button id="forEach-demo-button" class="btn btn-primary">Display
+                                                Fruits</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-block h-100">
+                                        <span class="keyword">const</span> <span class="variable">fruits</span> = [ <span class="string">"Apple"</span>, <span class="string">"Banana"</span>, <span class="string">"Orange"</span>, <span class="string">"Strawberry"</span>, <span class="string">"Mango"</span> ];
+
+                                        <br>
+                                        <span class="keyword">function</span> <span class="function">displayFruits</span>() {
+                                        <span class="keyword">const</span> <span class="variable">fruitList</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"fruit-list"</span>);
+                                        <span class="variable">fruitList</span>.<span class="variable">innerHTML</span> = <span class="string">""</span>;
+
+                                        <br>
+                                        <span class="variable">fruits</span>.<span class="function">forEach</span>(<span class="variable">fruit</span> => {
+                                        <span class="keyword">const</span> <span class="variable">item</span> = <span class="keyword">document</span>.<span class="function">createElement</span>(<span class="string">"div"</span>);
+                                        <span class="variable">item</span>.<span class="variable">className</span> = <span class="string">"list-group-item"</span>;
+                                        <span class="variable">item</span>.<span class="variable">textContent</span> = <span class="variable">fruit</span>;
+                                        <span class="variable">fruitList</span>.<span class="function">appendChild</span>(<span class="variable">item</span>);
+                                        });
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- For...of Loops section -->
+                    <section id="for-of-loops" class="mb-5">
+                        <h2>For...of Loops <span class="optional-tag">Optional</span></h2>
+                        <p class="lead">Iterating over arrays and other iterable objects with for...of loops.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">What are For...of Loops?</h5>
+                                <p>The <code>for...of</code> loop was introduced in ES6 (ECMAScript 2015) and provides a clean, concise way to iterate over iterable objects like arrays, strings, maps, sets, and more.</p>
+                                <p>Unlike the traditional <code>for</code> loop, <code>for...of</code> gives you direct access to the values in the iterable, not just the indexes. This makes your code more readable and less prone to errors.</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5>Basic Syntax</h5>
+                                <div class="code-block">
+                                    <span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">value</span> <span class="keyword">of</span> <span class="variable">iterable</span>) {
+                                    <span class="comment">// code to execute for each value</span>
+                                    }
+                                </div>
+                                <p><strong>Where:</strong></p>
+                                <ul>
+                                    <li><code>value</code>: A variable that receives the current value in each iteration
+                                    </li>
+                                    <li><code>iterable</code>: Any iterable object (array, string, map, set, etc.)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Examples</h5>
+                                <div class="code-block">
+                                    <span class="comment">// Iterating over an array</span>
+                                    <span class="keyword">const</span> <span class="variable">colors</span> = [<span class="string">"red"</span>, <span class="string">"green"</span>, <span class="string">"blue"</span>];
+                                    
+                                    <br>
+                                    <span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">color</span> <span class="keyword">of</span> <span class="variable">colors</span>) {
+                                    <span class="keyword">console</span>.<span class="function">log</span>(<span
+                                        class="variable">color</span>);
+                                    }
+
+                                    <br>
+                                    <span class="comment">// Iterating over a string</span>
+                                    <span class="keyword">const</span> <span class="variable">greeting</span> = <span class="string">"Hello"</span>;
+                                    <span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">char</span> <span class="keyword">of</span> <span class="variable">greeting</span>) {
+                                    <span class="keyword">console</span>.<span class="function">log</span>(<span
+                                        class="variable">char</span>);
+                                    }
+                                    <span class="comment">// "H", "e", "l", "l", "o"</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="demo-section">
+                            <h3 class="mb-3">For...of Loops in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Color Box Generator</h5>
+                                            <p>Click the button to generate colored boxes:</p>
+                                            <div id="color-boxes" class="d-flex flex-wrap gap-2 mb-3"></div>
+                                            <button id="for-of-demo-button" class="btn btn-primary">Generate
+                                                Colors</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-block h-100">
+                                        <span class="keyword">function</span> <span
+                                            class="function">generateColorBoxes</span>() {
+                                        <span class="keyword">const</span> <span class="variable">colors</span> = [ <span class="string">"#3498db"</span>, <span class="string">"#e74c3c"</span>, <span class="string">"#2ecc71"</span>, <span class="string">"#f39c12"</span>, <span class="string">"#9b59b6"</span>, <span class="string">"#1abc9c"</span> ];
+
+                                        <br>
+                                        <span class="keyword">const</span> <span class="variable">container</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"color-boxes"</span>);
+                                        <span class="variable">container</span>.<span class="variable">innerHTML</span> = <span class="string">""</span>;
+
+                                        <br>
+                                        <span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">color</span> <span class="keyword">of</span> <span class="variable">colors</span>) {
+                                        <span class="keyword">const</span> <span class="variable">box</span> = <span class="keyword">document</span>.<span class="function">createElement</span>(<span class="string">"div"</span>);
+                                        <span class="variable">box</span>.<span class="variable">className</span> = <span class="string">"color-box"</span>;
+                                        <span class="variable">box</span>.<span class="variable">style</span>.<span class="variable">backgroundColor</span> = <span class="variable">color</span>;
+                                        <span class="variable">box</span>.<span class="variable">textContent</span> = <span class="variable">color</span>;
+                                        <span class="variable">container</span>.<span class="function">appendChild</span>(<span class="variable">box</span>);
+                                        }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Objects section -->
+                    <section id="objects" class="mb-5">
+                        <h2>JavaScript Objects</h2>
+                        <p class="lead">Working with key-value pairs to create structured data.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">What are JavaScript Objects?</h5>
+                                <p>Objects are one of the most important data types in JavaScript. They allow you to store collections of related data and functionality in a single container. Think of objects as collections of key-value pairs, where each key is a property name and each value can be any valid JavaScript data type (including other objects or functions).</p>
+
+                                <p>Objects are useful for representing real-world entities with multiple characteristics. For example, a user object might have properties like name, email, age, and preferences.</p>
+                            </div>
+                        </div>
+
+                        <h3>Creating Objects</h3>
+                        <p>There are several ways to create objects in JavaScript:</p>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5>Object Literals</h5>
+                                <div class="code-block">
+                                    <span class="comment">// Object literal notation (most common)</span>
+                                    <span class="keyword">const</span> <span class="variable">person</span> = {
+                                    <span class="variable">firstName</span>: <span class="string">"John"</span>,
+                                    <span class="variable">lastName</span>: <span class="string">"Doe"</span>,
+                                    <span class="variable">age</span>: <span class="number">30</span>,
+                                    <span class="variable">isStudent</span>: <span class="boolean">false</span>
+                                    };
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Using the Object Constructor</h5>
+                                <div class="code-block">
+                                    <span class="comment">// Creating an empty object first</span>
+                                    <span class="keyword">const</span> <span class="variable">car</span> = <span class="keyword">new</span> <span class="function">Object</span>();
+
+                                    <br>
+                                    <span class="comment">// Adding properties</span>
+                                    <span class="variable">car</span>.<span class="variable">make</span> = <span class="string">"Toyota"</span>;
+                                    <span class="variable">car</span>.<span class="variable">model</span> = <span class="string">"Corolla"</span>;
+                                    <span class="variable">car</span>.<span class="variable">year</span> = <span class="number">2022</span>;
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Accessing Object Properties</h3>
+                        <p>You can access object properties in two ways:</p>
+
+                        <div class="code-block">
+                            <span class="comment">// Dot notation</span>
+                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">person</span>.<span class="variable">firstName</span>); <span class="comment">// "John"</span>
+
+                            <br>
+                            <span class="comment">// Bracket notation (useful when property names are dynamic or have special characters)</span>
+                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">person</span>[<span class="string">"lastName"</span>]); <span class="comment">// "Doe"</span>
+
+                            <br>
+                            <span class="comment">// Using a variable as property name</span>
+                            <span class="keyword">const</span> <span class="variable">propertyName</span> = <span class="string">"age"</span>;
+                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">person</span>[<span class="variable">propertyName</span>]); <span class="comment">// 30</span>
+                        </div>
+
+                        <div class="demo-section mt-4">
+                            <h3 class="mb-3">Objects in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">User Profile Example</h5>
+                                            <div id="user-profile" class="bg-light p-3 rounded mb-3">
+                                                <p class="text-muted">Click the button to display user profile</p>
+                                            </div>
+                                            <button id="objects-demo-button" class="btn btn-primary">Display Profile</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-block h-100">
+                                        <span class="keyword">const</span> <span class="variable">user</span> = {
+                                        <span class="variable">name</span>: <span class="string">"Alex Johnson"</span>,
+                                        <span class="variable">email</span>: <span class="string">"alex@example.com"</span>,
+                                        <span class="variable">age</span>: <span class="number">28</span>,
+                                        <span class="variable">location</span>: <span class="string">"New York"</span>,
+                                        <span class="variable">skills</span>: [<span class="string">"HTML"</span>, <span class="string">"CSS"</span>, <span class="string">"JavaScript"</span>],
+                                        <span class="variable">isEmployed</span>: <span class="boolean">true</span>
+                                        };
+
+                                        <br>
+                                        <span class="keyword">function</span> <span class="function">displayUserProfile</span>() {
+                                        <span class="keyword">const</span> <span class="variable">profileDiv</span> =
+                                        <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"user-profile"</span>);
+
+                                        <br>
+                                        <span class="variable">profileDiv</span>.<span class="variable">innerHTML</span>
+                                        = <span class="string">`
+                                            &lt;h4&gt;${user.name}&lt;/h4&gt;
+                                            &lt;p&gt;&lt;strong&gt;Email:&lt;/strong&gt; ${user.email}&lt;/p&gt;
+                                            &lt;p&gt;&lt;strong&gt;Age:&lt;/strong&gt; ${user.age}&lt;/p&gt;
+                                            &lt;p&gt;&lt;strong&gt;Location:&lt;/strong&gt; ${user.location}&lt;/p&gt;
+                                            &lt;p&gt;&lt;strong&gt;Skills:&lt;/strong&gt; ${user.skills.join(",
+                                            ")}&lt;/p&gt;
+                                            &lt;p&gt;&lt;strong&gt;Employment Status:&lt;/strong&gt; ${user.isEmployed ?
+                                            "Employed" :
+                                            "Unemployed"}&lt;/p&gt;
+                                            `</span>;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Object Methods section -->
+                    <section id="object-methods" class="mb-5">
+                        <h2>Object Methods</h2>
+                        <p class="lead">Creating and using methods in objects.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">What are Object Methods?</h5>
+                                <p>Object methods are functions that are stored as object properties. They allow objects to have behavior in addition to data. When a function is part of an object, we call it a method.</p>
+
+                                <p>Methods can access and modify the object's properties using the <code>this</code> keyword, which refers to the current object instance.</p>
+                            </div>
+                        </div>
+
+                        <h3>Defining Methods in Objects</h3>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5>Method Syntax in Object Literals</h5>
+                                <div class="code-block">
+                                    <span class="keyword">const</span> <span class="variable">person</span> = {
+                                    <span class="variable">firstName</span>: <span class="string">"John"</span>,
+                                    <span class="variable">lastName</span>: <span class="string">"Doe"</span>,
+                                    <span class="variable">age</span>: <span class="number">30</span>,
+
+                                    <br>
+                                    <span class="comment">// Method that uses object properties</span>
+                                    <span class="function">getFullName</span>() {
+                                    <span class="keyword">return</span> <span class="keyword">this</span>.<span class="variable">firstName</span> + <span class="string">" "</span> + <span class="keyword">this</span>.<span class="variable">lastName</span>;
+                                    },
+
+                                    <br>
+                                    <span class="comment">// Method with parameters</span>
+                                    <span class="function">greet</span>(<span class="variable">greeting</span>) {
+                                    <span class="keyword">return</span> <span class="variable">greeting</span> + <span class="string">", "</span> + <span class="keyword">this</span>.<span class="function">getFullName</span>() + <span class="string">"!"</span>;
+                                    }
+                                    };
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Calling Object Methods</h5>
+                                <div class="code-block">
+                                    <span class="comment">// Call the getFullName method</span>
+                                    <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">person</span>.<span class="function">getFullName</span>()); <span class="comment">// "John Doe"</span>
+
+                                    <br>
+                                    <span class="comment">// Call the greet method with an argument</span>
+                                    <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">person</span>.<span class="function">greet</span>(<span class="string">"Hello"</span>));
+                                    <span class="comment">// "Hello, John Doe!"</span>
+                                    <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">person</span>.<span class="function">greet</span>(<span class="string">"Good morning"</span>));
+                                    <span class="comment">// "Good morning, John Doe!"</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>The 'this' Keyword in Methods <span class="optional-tag">Optional</span></h3>
+                        <p>In an object method, <code>this</code> refers to the object that the method belongs to. It
+                            allows methods to
+                            access and modify the object's properties.</p>
+
+                        <div class="code-block">
+                            <span class="keyword">const</span> <span class="variable">counter</span> = {
+                            <span class="variable">count</span>: <span class="number">0</span>,
+                            <span class="function">increment</span>() {
+                            <span class="keyword">this</span>.<span class="variable">count</span>++;
+                            <span class="keyword">return</span> <span class="keyword">this</span>.<span
+                                class="variable">count</span>;
+                            },
+                            <span class="function">decrement</span>() {
+                            <span class="keyword">this</span>.<span class="variable">count</span>--;
+                            <span class="keyword">return</span> <span class="keyword">this</span>.<span
+                                class="variable">count</span>;
+                            },
+                            <span class="function">reset</span>() {
+                            <span class="keyword">this</span>.<span class="variable">count</span> = <span
+                                class="number">0</span>;
+                            <span class="keyword">return</span> <span class="keyword">this</span>.<span
+                                class="variable">count</span>;
+                            }
+                            };
+
+                            <br>
+                            <span class="variable">counter</span>.<span class="function">increment</span>(); <span class="comment">// 1</span>
+                            <span class="variable">counter</span>.<span class="function">increment</span>(); <span class="comment">// 2</span>
+                            <span class="variable">counter</span>.<span class="function">decrement</span>(); <span class="comment">// 1</span>
+                            <span class="variable">counter</span>.<span class="function">reset</span>(); <span class="comment">// 0</span>
+                        </div>
+
+                        <div class="demo-section mt-4">
+                            <h3 class="mb-3">Object Methods in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Shopping Cart Example</h5>
+                                            <div id="cart-display" class="bg-light p-3 rounded mb-3">
+                                                <h6>Shopping Cart</h6>
+                                                <ul id="cart-items" class="list-group mb-2">
+                                                    <!-- Items will be added here -->
+                                                </ul>
+                                                <p>Total: $<span id="cart-total">0.00</span></p>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button id="add-item-btn" class="btn btn-success btn-sm me-2">Add Random Item</button>
+                                                <button id="clear-cart-btn" class="btn btn-danger btn-sm">Clear Cart</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-block h-100">
+                                        <span class="keyword">const</span> <span class="variable">shoppingCart</span> =
+                                        {
+                                        <span class="variable">items</span>: [],
+                                        <span class="variable">total</span>: <span class="number">0</span>,
+
+                                        <span class="function">addItem</span>(<span class="variable">name</span>, <span
+                                            class="variable">price</span>) {
+                                        <span class="keyword">this</span>.<span class="variable">items</span>.<span
+                                            class="function">push</span>({ <span class="variable">name</span>, <span
+                                            class="variable">price</span> });
+                                        <span class="keyword">this</span>.<span
+                                            class="function">calculateTotal</span>();
+                                        <span class="keyword">this</span>.<span class="function">displayCart</span>();
+                                        },
+
+                                        <span class="function">removeItem</span>(<span class="variable">index</span>) {
+                                        <span class="keyword">this</span>.<span class="variable">items</span>.<span
+                                            class="function">splice</span>(<span class="variable">index</span>, <span
+                                            class="number">1</span>);
+                                        <span class="keyword">this</span>.<span
+                                            class="function">calculateTotal</span>();
+                                        <span class="keyword">this</span>.<span class="function">displayCart</span>();
+                                        },
+
+                                        <span class="function">calculateTotal</span>() {
+                                        <span class="keyword">this</span>.<span class="variable">total</span> = <span
+                                            class="keyword">this</span>.<span class="variable">items</span>.<span
+                                            class="function">reduce</span>((<span class="variable">sum</span>, <span
+                                            class="variable">item</span>) => <span class="variable">sum</span> + <span
+                                            class="variable">item</span>.<span class="variable">price</span>, <span
+                                            class="number">0</span>);
+                                        },
+
+                                        <span class="function">clearCart</span>() {
+                                        <span class="keyword">this</span>.<span class="variable">items</span> = [];
+                                        <span class="keyword">this</span>.<span class="variable">total</span> = <span
+                                            class="number">0</span>;
+                                        <span class="keyword">this</span>.<span class="function">displayCart</span>();
+                                        },
+
+                                        <span class="function">displayCart</span>() {
+                                        <span class="comment">// Display logic for the UI</span>
+                                        <span class="comment">// ...</span>
+                                        }
+                                        };
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Traversing Objects section -->
+                    <section id="traversing-objects" class="mb-5">
+                        <h2>Traversing Objects</h2>
+                        <p class="lead">Using Object.keys() and Object.values() to work with object properties.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Working with Object Properties Dynamically</h5>
+                                <p>JavaScript provides several built-in methods that allow you to work with objects in a
+                                    more dynamic way,
+                                    accessing keys and values without knowing them in advance.</p>
+
+                                <p>These methods are particularly useful when you need to:</p>
+                                <ul>
+                                    <li>Iterate over all properties in an object</li>
+                                    <li>Create lists of keys or values</li>
+                                    <li>Check if an object has certain properties</li>
+                                    <li>Create new objects based on existing ones</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Object.keys(), Object.values(), and Object.entries()</h3>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="code-block">
+                                    <span class="keyword">const</span> <span class="variable">person</span> = {
+                                    <span class="variable">name</span>: <span class="string">"Jane"</span>,
+                                    <span class="variable">age</span>: <span class="number">28</span>,
+                                    <span class="variable">city</span>: <span class="string">"Boston"</span>,
+                                    <span class="variable">isStudent</span>: <span class="boolean">true</span>
+                                    };
+
+                                    <br>
+                                    <span class="comment">// Get an array of all keys</span>
+                                    <span class="keyword">const</span> <span class="variable">keys</span> = <span class="keyword">Object</span>.<span class="function">keys</span>(<span class="variable">person</span>);
+                                    <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">keys</span>); <span class="comment">// ["name", "age", "city", "isStudent"]</span>
+
+                                    <br>
+                                    <span class="comment">// Get an array of all values</span>
+                                    <span class="keyword">const</span> <span class="variable">values</span> = <span class="keyword">Object</span>.<span class="function">values</span>(<span class="variable">person</span>);
+                                    <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">values</span>); <span class="comment">// ["Jane", 28, "Boston", true]</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="code-block">
+                                    <span class="comment">// Get key-value pairs as arrays</span>
+                                    <span class="keyword">const</span> <span class="variable">entries</span> = <span
+                                        class="keyword">Object</span>.<span class="function">entries</span>(<span
+                                        class="variable">person</span>);
+                                    <span class="keyword">console</span>.<span class="function">log</span>(<span
+                                        class="variable">entries</span>);
+                                    <span class="comment">/* [
+                                        ["name", "Jane"],
+                                        ["age", 28],
+                                        ["city", "Boston"],
+                                        ["isStudent", true]
+                                        ] */</span>
+
+                                    <br>
+                                    <span class="comment">// Create an object from entries</span>
+                                    <span class="keyword">const</span> <span class="variable">newPerson</span> = <span class="keyword">Object</span>.<span class="function">fromEntries</span>(<span class="variable">entries</span>);
+                                    <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">newPerson</span>);
+                                    <span class="comment">// Same as original person object</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Iterating Over Object Properties</h3>
+                        <p>You can use <code>Object.keys()</code> with a for...of loop or a .forEach() method to iterate over all properties in an object:</p>
+
+                        <div class="code-block">
+                            <span class="keyword">const</span> <span class="variable">product</span> = {
+                            <span class="variable">name</span>: <span class="string">"Laptop"</span>,
+                            <span class="variable">price</span>: <span class="number">999.99</span>,
+                            <span class="variable">brand</span>: <span class="string">"TechBrand"</span>,
+                            <span class="variable">inStock</span>:<span class="variable">inStock</span>: <span
+                                class="boolean">true</span>,
+                            <span class="variable">specs</span>: {
+                            <span class="variable">cpu</span>: <span class="string">"Intel i7"</span>,
+                            <span class="variable">ram</span>: <span class="string">"16GB"</span>,
+                            <span class="variable">storage</span>: <span class="string">"512GB SSD"</span>
+                            }
+                            };
+
+                            <br>
+                            <span class="comment">// Iterate over all properties</span>
+                            <span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">key</span> <span class="keyword">of</span> <span class="keyword">Object</span>.<span class="function">keys</span>(<span class="variable">product</span>)) {
+                            <span class="keyword">const</span> <span class="variable">value</span> = <span class="variable">product</span>[<span class="variable">key</span>];
+                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">`${key}: ${value}`</span>);
+                            }
+
+                            <br>
+                            <span class="comment">// Iterate over all values using forEach</span>
+                            <span class="keyword">Object</span>.<span class="function">values</span>(<span class="variable">product</span>).<span class="function">forEach</span>(<span class="variable">value</span> => {
+                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">value</span>);
+                            });
+                        </div>
+
+                        <div class="alert alert-info mt-3">
+                            <p><strong>Note:</strong> For nested objects (like <code>product.specs</code> above),
+                                <code>Object.keys()</code>
+                                will only return the top-level keys. To iterate through nested objects, you would need
+                                to check if each value is
+                                an object and recursively process it.
+                            </p>
+                        </div>
+
+                        <div class="demo-section mt-4">
+                            <h3 class="mb-3">Object Traversal in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Movie Information Display</h5>
+                                            <div class="mb-3">
+                                                <div id="movie-display" class="bg-light p-3 rounded">
+                                                    <p class="text-muted">Click the button to display movie details</p>
+                                                </div>
+                                            </div>
+                                            <button id="object-keys-values-demo-button" class="btn btn-primary">Display Movie Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-block h-100">
+                                        <span class="keyword">const</span> <span class="variable">movie</span> = {
+                                        <span class="variable">title</span>: <span class="string">"Inception"</span>,
+                                        <span class="variable">director</span>: <span class="string">"Christopher Nolan"</span>,
+                                        <span class="variable">year</span>: <span class="number">2010</span>,
+                                        <span class="variable">genre</span>: <span class="string">"Sci-Fi"</span>,
+                                        <span class="variable">rating</span>: <span class="number">8.8</span>,
+                                        <span class="variable">duration</span>: <span class="string">"148 min"</span>,
+                                        <span class="variable">cast</span>: [<span class="string">"Leonardo DiCaprio"</span>, <span class="string">"Ellen Page"</span>, <span class="string">"Tom Hardy"</span>]
+                                        };
+
+                                        <br>
+                                        <span class="keyword">function</span> <span class="function">displayMovieDetails</span>() {
+                                        <span class="keyword">const</span> <span class="variable">display</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"movie-display"</span>);
+                                        <span class="variable">display</span>.<span class="variable">innerHTML</span> = <span class="string">""</span>;
+
+                                        <br>
+                                        <span class="comment">// Create a table to display properties</span>
+                                        <span class="keyword">const</span> <span class="variable">table</span> = <span class="keyword">document</span>.<span class="function">createElement</span>(<span class="string">"table"</span>);
+                                        <span class="variable">table</span>.<span class="variable">className</span> = <span class="string">"table table-striped"</span>;
+
+                                        <br>
+                                        <span class="comment">// Add table header</span>
+                                        <span class="keyword">const</span> <span class="variable">thead</span> = <span class="keyword">document</span>.<span class="function">createElement</span>(<span class="string">"thead"</span>);
+                                        <span class="variable">thead</span>.<span class="variable">innerHTML</span> = <span class="string">"&lt;tr&gt;&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;/tr&gt;"</span>;
+                                        <span class="variable">table</span>.<span class="function">appendChild</span>(<span class="variable">thead</span>);
+
+                                        <br>
+                                        <span class="comment">// Create table body</span>
+                                        <span class="keyword">const</span> <span class="variable">tbody</span> = <span class="keyword">document</span>.<span class="function">createElement</span>(<span class="string">"tbody"</span>);
+
+                                        <br>
+                                        <span class="comment">// Iterate through object properties</span>
+                                        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="variable">key</span> <span class="keyword">of</span> <span class="keyword">Object</span>.<span class="function">keys</span>(<span class="variable">movie</span>)) {
+                                        <span class="keyword">const</span> <span class="variable">row</span> = <span class="keyword">document</span>.<span class="function">createElement</span>(<span class="string">"tr"</span>);
+                                        <span class="keyword">let</span> <span class="variable">value</span> = <span class="variable">movie</span>[<span class="variable">key</span>];
+
+                                        <span class="comment">// Format arrays nicely</span>
+                                        <span class="keyword">if</span> (<span class="keyword">Array</span>.<span class="function">isArray</span>(<span class="variable">value</span>)) {
+                                        <span class="variable">value</span> = <span class="variable">value</span>.<span class="function">join</span>(<span class="string">", "</span>);
+                                        }
+
+                                        <br>
+                                        <span class="variable">row</span>.<span class="variable">innerHTML</span> = <span class="string">`&lt;td&gt;${key}&lt;/td&gt;&lt;td&gt;${value}&lt;/td&gt;`</span>;
+                                        <span class="variable">tbody</span>.<span class="function">appendChild</span>(<span class="variable">row</span>);
+                                        }
+
+                                        <span class="variable">table</span>.<span class="function">appendChild</span>(<span class="variable">tbody</span>);
+                                        <span class="variable">display</span>.<span class="function">appendChild</span>(<span class="variable">table</span>);
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- classList section -->
+                    <section id="classList" class="mb-5">
+                        <h2>Working with classList</h2>
+                        <p class="lead">Dynamically adding, removing, and toggling CSS classes.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">The classList API</h5>
+                                <p>The <code>classList</code> property provides a convenient way to manipulate an element's CSS classes. Instead of manually parsing and modifying the <code>className</code> string, <code>classList</code> gives you methods to add, remove, toggle, and check for classes.
+                                </p>
+
+                                <p>This makes it much easier to dynamically update an element's appearance based on user interactions or application state.</p>
+                            </div>
+                        </div>
+
+                        <h3>classList Methods</h3>
+                        <div class="table-responsive mb-4">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Example</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>add()</code></td>
+                                        <td>Adds one or more classes to an element</td>
+                                        <td><code>element.classList.add("active", "highlight");</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>remove()</code></td>
+                                        <td>Removes one or more classes from an element</td>
+                                        <td><code>element.classList.remove("disabled");</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>toggle()</code></td>
+                                        <td>Adds a class if it doesn't exist, removes it if it does</td>
+                                        <td><code>element.classList.toggle("selected");</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>contains()</code></td>
+                                        <td>Checks if an element has a specific class</td>
+                                        <td><code>if (element.classList.contains("active")) { ... }</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>replace()</code></td>
+                                        <td>Replaces an existing class with a new class</td>
+                                        <td><code>element.classList.replace("old-class", "new-class");</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="demo-section">
+                            <h3 class="mb-3">classList in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div id="classList-demo-element" class="demo-element p-3 border rounded">
+                                        <h5>Interactive Element</h5>
+                                        <p>Click the buttons below to modify this element's CSS classes.</p>
+                                    </div>
+                                    <div class="mt-3">
+                                        <p><strong>Current classes:</strong> <span id="current-classes">demo-element p-3 border rounded</span></p>
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mt-3">
+                                        <button class="btn btn-primary classList-demo-button" data-action="add" data-class="bg-primary">Add bg-primary</button>
+                                        <button class="btn btn-success classList-demo-button" data-action="add" data-class="text-white">Add text-white</button>
+                                        <button class="btn btn-warning classList-demo-button" data-action="toggle" data-class="shadow">Toggle shadow</button>
+                                        <button class="btn btn-danger classList-demo-button" data-action="remove" data-class="bg-primary">Remove bg-primary</button>
+                                        <button class="btn btn-info classList-demo-button" data-action="contains" data-class="text-white">Check text-white</button>
+                                        <button class="btn btn-secondary classList-demo-button" data-action="reset">Reset All</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-block h-100">
+                                        <span class="comment">// Example of using classList methods</span>
+                                        <span class="keyword">const</span> <span class="variable">element</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"myElement"</span>);
+
+                                        <br>
+                                        <span class="comment">// Adding classes</span>
+                                        <span class="variable">element</span>.<span class="variable">classList</span>.<span class="function">add</span>(<span class="string">"active"</span>);
+                                        <span class="variable">element</span>.<span class="variable">classList</span>.<span class="function">add</span>(<span class="string">"highlight"</span>, <span class="string">"border"</span>);
+                                        <span class="comment">// Add multiple classes</span>
+
+                                        <br>
+                                        <span class="comment">// Removing classes</span>
+                                        <span class="variable">element</span>.<span class="variable">classList</span>.<span class="function">remove</span>(<span class="string">"inactive"</span>);
+
+                                        <br>
+                                        <span class="comment">// Toggling classes (add if missing, remove if present)</span>
+                                        <span class="variable">element</span>.<span class="variable">classList</span>.<span class="function">toggle</span>(<span class="string">"selected"</span>);
+
+                                        <br>
+                                        <span class="comment">// Checking if a class exists</span>
+                                        <span class="keyword">if</span> (<span class="variable">element</span>.<span class="variable">classList</span>.<span class="function">contains</span>(<span class="string">"disabled"</span>)) {
+                                        <span class="comment">// Element has the "disabled" class</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Event Delegation section -->
+                    <section id="event-delegation" class="mb-5">
+                        <h2>Event Delegation <span class="optional-tag">Optional</span></h2>
+                        <p class="lead">Managing events for dynamic elements efficiently.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">What is Event Delegation?</h5>
+                                <p>Event delegation is a technique where you attach a single event listener to a parent element instead of adding event listeners to multiple child elements. The event listener on the parent will fire for all descendants because of event bubbling.</p>
+
+                                <p>This approach has several benefits:</p>
+                                <ul>
+                                    <li><strong>Memory efficiency</strong> - Only one event listener needed instead of many</li>
+                                    <li><strong>Dynamic elements</strong> - Works for elements added to the DOM after the initial page load
+                                    </li>
+                                    <li><strong>Less code</strong> - Cleaner implementation for handling similar elements</li>
+                                    <li><strong>Automatic handling of added/removed elements</strong> - No need to manually add/remove event listeners</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>How Event Delegation Works</h3>
+                        <p>When an event occurs on an element (like a click), the event bubbles up through its ancestors in the DOM tree. Event delegation leverages this bubbling process by placing an event listener on a parent element and using <code>event.target</code> to determine which child element triggered the event.
+                        </p>
+
+                        <div class="code-block">
+                            <span class="comment">// Instead of this (adding listeners to each button):</span>
+                            <span class="keyword">const</span> <span class="variable">buttons</span> = <span class="keyword">document</span>.<span class="function">querySelectorAll</span>(<span class="string">".delete-btn"</span>);
+                            <span class="variable">buttons</span>.<span class="function">forEach</span>(<span class="variable">button</span> => {
+                            <span class="variable">button</span>.<span class="function">addEventListener</span>(<span class="string">"click"</span>, <span class="function">handleDelete</span>);
+                            });
+
+                            <br>
+                            <span class="comment">// Use event delegation (single listener on parent):</span>
+                            <span class="keyword">const</span> <span class="variable">container</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"items-container"</span>);
+                            <span class="variable">container</span>.<span class="function">addEventListener</span>(<span class="string">"click"</span>, <span class="keyword">function</span>(<span class="variable">event</span>) {
+                            <span class="keyword">if</span> (<span class="variable">event</span>.<span class="variable">target</span>.<span class="variable">classList</span>.<span class="function">contains</span>(<span class="string">"delete-btn"</span>)) {
+                            <span class="comment">// A delete button was clicked</span>
+                            <span class="function">handleDelete</span>(<span class="variable">event</span>);
+                            }
+                            });
+                        </div>
+
+                        <div class="demo-section mt-4">
+                            <h3 class="mb-3">Event Delegation in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h5 class="mb-0">Dynamic Item List</h5>
+                                            <button id="add-delegation-item" class="btn btn-primary btn-sm">Add New Item</button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div id="delegation-container">
+                                                <!-- Items will be added here -->
+                                            </div>
+                                            <div class="mt-3">
+                                                <p class="text-muted">Click the "Delete" button on any item to remove it. Even new items that are added dynamically will have working delete buttons thanks to event delegation.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-block h-100">
+                                        <span class="comment">// Event delegation implementation</span>
+                                        <span class="keyword">document</span>.<span class="function">addEventListener</span>(<span class="string">"DOMContentLoaded"</span>, <span class="keyword">function</span>() {
+                                        <span class="keyword">const</span> <span class="variable">container</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"delegation-container"</span>);
+
+                                        <br>
+                                        <span class="comment">// Initialize with some items</span>
+                                        <span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = <span class="number">1</span>; <span class="variable">i</span> <= <span class="number">5</span>; <span class="variable">i</span>++) {
+                                            <span class="variable">container</span>.<span class="function">appendChild</span>(<span class="function">createItem</span>(<span class="variable">i</span>));
+                                            }
+
+                                            <span class="comment">// Add event listener to container (parent element)</span>
+                                            <span class="variable">container</span>.<span class="function">addEventListener</span>(<span class="string">"click"</span>, <span class="keyword">function</span>(<span class="variable">event</span>) {
+                                            
+                                            <br>
+                                            <span class="comment">// Check if the clicked element is a delete button</span>
+                                            <span class="keyword">if</span> (<span class="variable">event</span>.<span class="variable">target</span>.<span class="variable">classList</span>.<span class="function">contains</span>(<span class="string">"delete-btn"</span>)) {
+                                            
+                                            <br>
+                                            <span class="comment">// Find the parent item and remove it</span>
+                                            <span class="keyword">const</span> <span class="variable">item</span> = <span class="variable">event</span>.<span class="variable">target</span>.<span class="function">closest</span>(<span class="string">".delegation-item"</span>);
+                                            <span class="variable">item</span>.<span class="function">remove</span>();
+                                            }
+                                            });
+
+                                            <br>
+                                            <span class="comment">// Add new item button</span>
+                                            <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"add-delegation-item"</span>).<span class="function">addEventListener</span>(<span class="string">"click"</span>, <span class="keyword">function</span>() {
+                                            <span class="keyword">const</span> <span class="variable">itemCount</span> = <span class="variable">container</span>.<span class="variable">children</span>.<span class="variable">length</span> + <span class="number">1</span>;
+                                            <span class="variable">container</span>.<span class="function">appendChild</span>(<span class="function">createItem</span>(<span class="variable">itemCount</span>));
+                                            });
+
+                                            <br>
+                                            <span class="keyword">function</span> <span class="function">createItem</span>(<span class="variable">num</span>) {
+                                            <span class="keyword">const</span> <span class="variable">item</span> = <span class="keyword">document</span>.<span class="function">createElement</span>(<span class="string">"div"</span>);
+                                            <span class="variable">item</span>.<span class="variable">className</span> = <span class="string">"delegation-item p-2 border rounded mb-2"</span>;
+                                            <span class="variable">item</span>.<span class="variable">innerHTML</span> = <span class="string">`Item ${num} <button class="btn btn-sm btn-danger float-end delete-btn">Delete</button>`</span>;
+                                            <span class="keyword">return</span> <span class="variable">item</span>;
+                                            }
+                                            });
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Form Handling section -->
+                    <section id="form-handling" class="mb-5">
+                        <h2>Form Data Handling</h2>
+                        <p class="lead">Capturing and processing user input from forms.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Working with HTML Forms</h5>
+                                <p>Forms are an essential part of web applications, allowing users to input data that can be processed by JavaScript. Handling form data involves capturing user inputs, validating them, and responding accordingly.</p>
+
+                                <h5 class="mt-4">Key Aspects of Form Handling:</h5>
+                                <ul>
+                                    <li>Preventing the default form submission behavior</li>
+                                    <li>Accessing form elements and their values</li>
+                                    <li>Validating user input</li>
+                                    <li>Displaying error messages</li>
+                                    <li>Submitting data (to a server or processing it client-side)</li>
+                                    <li>Providing feedback to the user</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Form Event Handling</h3>
+                        <p>The most common event to handle for forms is the <code>submit</code> event, which fires when the user attempts to submit the form (by clicking a submit button or pressing Enter in a form field).</p>
+
+                        <div class="code-block">
+                            <span class="keyword">const</span> <span class="variable">form</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"signup-form"</span>);
+
+                            <span class="variable">form</span>.<span class="function">addEventListener</span>(<span class="string">"submit"</span>, <span class="keyword">function</span>(<span class="variable">event</span>) {
+                            <span class="comment">// Prevent the default form submission</span>
+                            <span class="variable">event</span>.<span class="function">preventDefault</span>();
+
+                            <br>
+                            <span class="comment">// Get form data and process it</span>
+                            <span class="keyword">const</span> <span class="variable">username</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"username"</span>).<span class="variable">value</span>;
+                            <span class="keyword">const</span> <span class="variable">email</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"email"</span>).<span class="variable">value</span>;
+
+                            <br>
+                            <span class="comment">// Validate the data</span>
+                            <span class="keyword">if</span> (<span class="variable">username</span> === <span class="string">""</span> || <span class="variable">email</span> === <span class="string">""</span>) {
+                            <span class="function">alert</span>(<span class="string">"Please fill out all fields"</span>);
+                            <span class="keyword">return</span>;
+                            }
+
+                            <br>
+                            <span class="comment">// Process the valid data</span>
+                            <span class="function">console.log</span>(<span class="string">"Form submitted:"</span>, <span class="variable">username</span>, <span class="variable">email</span>);
+                            });
+                        </div>
+
+                        <h3 class="mt-4">The FormData Object</h3>
+                        <p>The <code>FormData</code> object provides a convenient way to capture all form inputs without having to select each one individually.</p>
+
+                        <div class="code-block">
+                            <span class="variable">form</span>.<span class="function">addEventListener</span>(<span class="string">"submit"</span>, <span class="keyword">function</span>(<span class="variable">event</span>) {
+                            <span class="variable">event</span>.<span class="function">preventDefault</span>();
+
+                            <br>
+                            <span class="comment">// Create a FormData object from the form</span>
+                            <span class="keyword">const</span> <span class="variable">formData</span> = <span class="keyword">new</span> <span class="function">FormData</span>(<span class="keyword">this</span>);
+
+                            <br>
+                            <span class="comment">// Access individual form fields</span>
+                            <span class="keyword">const</span> <span class="variable">username</span> = <span class="variable">formData</span>.<span class="function">get</span>(<span class="string">"username"</span>);
+                            <span class="keyword">const</span> <span class="variable">email</span> = <span class="variable">formData</span>.<span class="function">get</span>(<span class="string">"email"</span>);
+
+                            <br>
+                            <span class="comment">// Convert to a regular object</span>
+                            <span class="keyword">const</span> <span class="variable">formValues</span> = <span class="keyword">Object</span>.<span class="function">fromEntries</span>(<span class="variable">formData</span>.<span class="function">entries</span>());
+                            <span class="function">console.log</span>(<span class="variable">formValues</span>);
+                            });
+                        </div>
+
+                        <div class="demo-section mt-4">
+                            <h3 class="mb-3">Form Handling in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">User Profile Form</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form id="form-demo">
+                                                <div class="mb-3">
+                                                    <label for="name" class="form-label">Name</label>
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                        required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="email" name="email"
+                                                        required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="age" class="form-label">Age (optional)</label>
+                                                    <input type="number" class="form-control" id="age" name="age">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Interests</label>
+                                                    <select class="form-select" name="interests">
+                                                        <option value="">Select an interest</option>
+                                                        <option value="programming">Programming</option>
+                                                        <option value="design">Design</option>
+                                                        <option value="business">Business</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3 form-check">
+                                                    <input type="checkbox" class="form-check-input" id="newsletter"
+                                                        name="newsletter">
+                                                    <label class="form-check-label" for="newsletter">Subscribe to
+                                                        newsletter</label>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="comments" class="form-label">Comments</label>
+                                                    <textarea class="form-control" id="comments" name="comments"
+                                                        rows="3"></textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="form-result" class="mb-3">
+                                        <!-- Form results will be displayed here -->
+                                    </div>
+                                    <div class="code-block h-100">
+                                        <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"form-demo"</span>).<span class="function">addEventListener</span>(<span class="string">"submit"</span>, <span class="keyword">function</span>(<span class="variable">event</span>) {
+                                        <span class="comment">// Prevent default form submission</span>
+                                        <span class="variable">event</span>.<span class="function">preventDefault</span>();
+
+                                        <br>
+                                        <span class="comment">// Create FormData object from the form</span>
+                                        <span class="keyword">const</span> <span class="variable">formData</span> = <span class="keyword">new</span> <span class="function">FormData</span>(<span class="keyword">this</span>);
+
+                                        <br>
+                                        <span class="comment">// Convert to regular object</span>
+                                        <span class="keyword">const</span> <span class="variable">formValues</span> = <span class="keyword">Object</span>.<span class="function">fromEntries</span>(<span class="variable">formData</span>.<span class="function">entries</span>());
+
+                                        <br>
+                                        <span class="comment">// Display submitted data</span>
+                                        <span class="keyword">const</span> <span class="variable">resultDiv</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"form-result"</span>);
+
+                                        <span class="variable">resultDiv</span>.<span class="variable">innerHTML</span>
+                                        = <span class="string">`
+                                            &lt;div class="alert alert-success"&gt;
+                                                &lt;h5&gt;Form Submitted!&lt;/h5&gt;
+                                                &lt;p&gt;&lt;strong&gt;Name:&lt;/strong&gt; ${formValues.name}&lt;/p&gt;
+                                                &lt;p&gt;&lt;strong&gt;Email:&lt;/strong&gt; ${formValues.email}&lt;/p&gt;
+                                                &lt;p&gt;&lt;strong&gt;Age:&lt;/strong&gt; ${formValues.age || 'Not provided'}&lt;/p&gt;
+                                                &lt;p&gt;&lt;strong&gt;Interests:&lt;/strong&gt; ${formValues.interests || 'None selected'}&lt;/p&gt;
+                                                &lt;p&gt;&lt;strong&gt;Newsletter:&lt;/strong&gt; ${formValues.newsletter ? 'Yes' : 'No'} &lt;/p&gt; &lt;p&gt;&lt;strong&gt;Comments:&lt;/strong&gt; ${formValues.comments || 'None'}&lt;/p&gt;
+                                            &lt;/div&gt;
+                                            `
+                                        </span>;
+
+                                        <br>
+                                        <span class="comment">// Optional: Reset the form</span>
+                                        <span class="keyword">this</span>.<span class="function">reset</span>();
+                                        });
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Practice Exercises section -->
+                    <section id="practice-exercises" class="mb-5">
+                        <h2>Practice Exercises</h2>
+                        <p class="lead">Apply what you've learned with hands-on exercises.</p>
+
+                        <!-- Exercise 1: Loops -->
+                        <div class="practice-container">
+                            <h3>Exercise 1: Loops and DOM Manipulation</h3>
+                            <p>Create a function that generates a table of multiplication values using loops and DOM
+                                manipulation.</p>
+
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="Write your code here"
+                                            id="exercise1-input" style="height: 240px">// Write a function generateMultiplicationTable(rows, cols) that:
+                    // 1. Creates a multiplication table with the specified number of rows and columns
+                    // 2. Displays the table in the "exercise1-result" div
+                    // 3. Uses a nested loop to generate the table cells
+                    // 4. Highlights cells with even products in a different color
+                    
+                    function generateMultiplicationTable(rows, cols) {
+                      // Your code here
+                    }
+                    
+                    // Call the function with 10 rows and 10 columns
+                    generateMultiplicationTable(10, 10);</textarea>
+                                        <label for="exercise1-input">Write your code here</label>
+                                    </div>
+                                    <button class="btn btn-primary" id="exercise1-run">Run Code</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Instructions</h5>
+                                            <p>Create a function <code>generateMultiplicationTable(rows, cols)</code>
+                                                that:</p>
+                                            <ul>
+                                                <li>Generates an HTML table showing a multiplication table</li>
+                                                <li>Uses nested loops to create the rows and columns</li>
+                                                <li>Shows row and column headers (1, 2, 3, ...)</li>
+                                                <li>Highlights cells with even product values</li>
+                                                <li>Appends the table to the result div</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="exercise1-output" class="alert" style="display: none;"></div>
+                            <div id="exercise1-result" class="bg-light p-3 rounded">
+                                <!-- Multiplication table will appear here -->
+                            </div>
+                        </div>
+
+                        <!-- Exercise 2: Objects -->
+                        <div class="practice-container mt-4">
+                            <h3>Exercise 2: Working with Objects</h3>
+                            <p>Create a Library object with methods to manage a collection of books.</p>
+
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="Write your code here"
+                                            id="exercise2-input" style="height: 300px">// Create a Library object with the following features:
+                    // 1. A books array to store book objects
+                    // 2. An addBook() method to add a new book
+                    // 3. A findBooksByAuthor() method to find all books by a specific author
+                    // 4. A displayAllBooks() method to show all books in the library-display div
+                    
+                    const Library = {
+                      // Your code here
+                    };
+                    
+                    // Initialize with some books
+                    Library.addBook("The Hobbit", "J.R.R. Tolkien", 1937);
+                    Library.addBook("1984", "George Orwell", 1949);
+                    Library.addBook("The Lord of the Rings", "J.R.R. Tolkien", 1954);
+                    
+                    // Display all books
+                    Library.displayAllBooks();</textarea>
+                                        <label for="exercise2-input">Write your code here</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button class="btn btn-primary me-2" id="exercise2-run">Run Code</button>
+                                        <button class="btn btn-secondary" id="exercise2-reset">Reset</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Requirements</h5>
+                                            <p>Create a <code>Library</code> object with:</p>
+                                            <ul>
+                                                <li>A <code>books</code> array to store book objects</li>
+                                                <li><code>addBook(title, author, year)</code> method</li>
+                                                <li><code>findBooksByAuthor(author)</code> method that returns an array
+                                                    of matching books
+                                                </li>
+                                                <li><code>displayAllBooks()</code> method that shows all books in the
+                                                    library-display div
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="exercise2-output" class="alert" style="display: none;"></div>
+                            <div id="exercise2-test-ui" class="bg-light p-3 rounded mb-3" style="display: none;">
+                                <h5>Test Your Library</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Title:</label>
+                                            <input type="text" id="test-book-title" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Author:</label>
+                                            <input type="text" id="test-book-author" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Year:</label>
+                                            <input type="number" id="test-book-year" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button id="add-test-book" class="btn btn-primary mb-3">Add Book</button>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label class="form-label">Search by Author:</label>
+                                            <div class="input-group">
+                                                <input type="text" id="test-search-author" class="form-control">
+                                                <button id="search-author" class="btn btn-primary">Search</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="search-results" class="mt-3"></div>
+                            </div>
+                            <div id="library-display"></div>
+                        </div>
+
+                        <!-- Exercise 3: DOM & Events -->
+                        <div class="practice-container mt-4">
+                            <h3>Exercise 3: DOM and Event Handling</h3>
+                            <p>Create a simple task manager with event delegation for dynamic elements.</p>
+
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="Write your code here"
+                                            id="exercise3-input" style="height: 300px">// Create a function that sets up a task manager with:
+                                        // 1. A form for adding new tasks (input field and button)
+                                        // 2. A list to display tasks with delete buttons
+                                        // 3. Use event delegation to handle task deletion
+                                        // 4. Use classList to style completed tasks
+                                        // 5. Persist tasks in the DOM until explicitly removed
+                                        
+                                        function createTaskManager() {
+                                          // Your code here - set up the form, list, and event handlers
+                                          // All elements should be created and added to task-manager-container
+                                        }
+                                        
+                                        // Initialize the task manager
+                                        // createTaskManager(); // Uncomment this when ready to test</textarea>
+                                        <label for="exercise3-input">Write your code here</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button class="btn btn-primary me-2" id="exercise3-run">Run Code</button>
+                                        <button class="btn btn-secondary" id="exercise3-reset">Reset</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Requirements</h5>
+                                            <p>Create a function <code>createTaskManager()</code> that:</p>
+                                            <ul>
+                                                <li>Creates an input field with ID <code>task-input</code></li>
+                                                <li>Creates an add button with ID <code>add-task-button</code></li>
+                                                <li>Creates a task list with ID <code>tasks-list</code></li>
+                                                <li>Adds all elements to <code>task-manager-container</code></li>
+                                                <li>Implements adding new tasks when the button is clicked</li>
+                                                <li>Uses event delegation for task deletion</li>
+                                                <li>Allows tasks to be marked as completed by clicking on them</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="exercise3-output" class="alert" style="display: none;"></div>
+                            <div id="task-manager-container" class="bg-light p-3 rounded">
+                                <!-- Task manager will be created here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Session Summary section -->
+                    <section id="session-summary">
+                        <h2>Session Summary</h2>
+                        <p class="lead">Recap of key concepts covered in this session.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Key Concepts Covered</h5>
+                                <ul class="mb-0">
+                                    <li><strong>Array forEach Method</strong> - Executing a function for each array
+                                        element</li>
+                                    <li><strong>For...of Loops</strong> - Iterating over iterable objects like arrays
+                                        and strings</li>
+                                    <li><strong>JavaScript Objects</strong> - Working with key-value pairs to organize
+                                        data</li>
+                                    <li><strong>Object Methods</strong> - Adding behavior to objects with functions</li>
+                                    <li><strong>Traversing Objects</strong> - Using Object.keys() and Object.values() to
+                                        work with object
+                                        properties</li>
+                                    <li><strong>classList API</strong> - Manipulating an element's CSS classes
+                                        dynamically</li>
+                                    <li><strong>Event Delegation</strong> - Efficient event handling for multiple
+                                        elements</li>
+                                    <li><strong>Form Data Handling</strong> - Capturing and processing user input from
+                                        forms</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Next Steps</h3>
+                        <p>In the next session, we'll explore more advanced JavaScript concepts and techniques:</p>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Session 5 Preview</h5>
+                                        <ul class="mb-0">
+                                            <li>Introduction to Web APIs</li>
+                                            <li>Working with JSON data</li>
+                                            <li>Using the Fetch API for HTTP requests</li>
+                                            <li>Understanding async/await for asynchronous operations</li>
+                                            <li>Processing and displaying data from external sources</li>
+                                            <li>Data-driven styling techniques</li>
+                                            <li>Completing our grocery list application</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Practice Suggestions</h5>
+                                        <p>To reinforce what you've learned in this session, try these exercises:</p>
+                                        <ul class="mb-0">
+                                            <li>Create a color palette generator that uses objects and loops</li>
+                                            <li>Build a dynamic form with field validation using event listeners</li>
+                                            <li>Implement a sortable, filterable list with event delegation</li>
+                                            <li>Create a simple shopping cart that uses objects, methods, and
+                                                localStorage</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Additional Resources</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <ul>
+                                                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach"
+                                                            target="_blank">MDN: Array.prototype.forEach()</a></li>
+                                                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of"
+                                                            target="_blank">MDN: for...of statement</a></li>
+                                                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects"
+                                                            target="_blank">MDN: Working with Objects</a></li>
+                                                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys"
+                                                            target="_blank">MDN: Object.keys()</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul>
+                                                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/classList"
+                                                            target="_blank">MDN: Element.classList</a></li>
+                                                    <li><a href="https://javascript.info/event-delegation"
+                                                            target="_blank">JavaScript.info:
+                                                            Event Delegation</a></li>
+                                                    <li><a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_and_retrieving_form_data"
+                                                            target="_blank">MDN: Sending Form Data</a></li>
+                                                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData"
+                                                            target="_blank">MDN: FormData API</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4 mb-4">
+                            <a href="#" class="btn btn-secondary btn-lg">Session 5 (coming soon): APIs, JSON & Data-Driven Styling</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>JavaScript Fundamentals</h4>
+                    <p>Session 4: Loops & Advanced DOM Interaction</p>
+                    <p><a href="index.html" class="text-white">Back to Course Home</a></p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <nav>
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+                            <li class="list-inline-item"><a href="#" class="text-white">Next Session (coming soon)</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <p>© BYU IS 120: Introduction to Web Dev</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/session4.js"></script>
+</body>
+
+</html>

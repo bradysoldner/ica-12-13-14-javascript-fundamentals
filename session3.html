@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 3: Control Flow & More DOM Manipulation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" tabindex="0">
+    <button id="back-to-top" class="btn btn-primary rounded-circle" onclick="scrollToTop()">↑</button>
+
+    <header class="text-center">
+        <div class="container">
+            <h1 class="display-5">Session 3: Control Flow & More DOM Manipulation</h1>
+            <p class="lead">Master conditional statements, arrays, and creating dynamic HTML elements</p>
+            <div class="mt-3">
+                <a href="session2.html" class="btn btn-outline-light btn-sm me-2">← Previous Session</a>
+                <a href="index.html" class="btn btn-outline-light btn-sm me-2">Course Home</a>
+                <a href="session4.html" class="btn btn-light btn-sm">Next Session →</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <!-- Progress tracker / Table of contents -->
+            <div class="col-md-3">
+                <div class="progress-tracker">
+                    <h5>In This Session</h5>
+                    <nav id="navbar-example3" class="navbar bg-light flex-column align-items-stretch p-3 rounded mb-4">
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link" href="#conditionals">Conditional Statements</a>
+                            <a class="nav-link" href="#logical-operators">Logical Operators</a>
+                            <a class="nav-link" href="#arrays">Arrays</a>
+                            <a class="nav-link" href="#array-methods">Array Methods <span class="optional-tag">Optional</span></a>
+                            <a class="nav-link" href="#creating-elements">Creating HTML Elements</a>
+                            <a class="nav-link" href="#modifying-dom">Modifying the DOM Tree</a>
+                            <a class="nav-link" href="#practice-exercises">Practice Exercises</a>
+                            <a class="nav-link" href="#session-summary">Session Summary</a>
+                        </nav>
+                    </nav>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Learning Objectives</h5>
+                            <ul class="mb-0">
+                                <li>Use conditional statements to control program flow</li>
+                                <li>Work with logical operators to create complex conditions</li>
+                                <li>Create and manipulate arrays to store collections of data</li>
+                                <li>Use array methods to transform and filter data</li>
+                                <li>Dynamically create HTML elements with JavaScript</li>
+                                <li>Add, modify, and remove elements from the DOM</li>
+                                <li>Continue building our grocery list application</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="col-md-9">
+                <div id="content" class="scrollspy-example rounded-2" tabindex="0">
+                    <!-- Conditional Statements section -->
+                    <section id="conditionals" class="mb-5">
+                        <h2>Conditional Statements</h2>
+                        <p class="lead">Making decisions in your code with if, else if, and else statements.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">What are Conditional Statements?</h5>
+                                <p>Conditional statements allow your program to make decisions based on certain
+                                    conditions. They execute different code based on whether a condition evaluates to
+                                    <code>true</code> or <code>false</code>.</p>
+
+                                <p>JavaScript supports several types of conditional statements:</p>
+                                <ul>
+                                    <li><strong>if statement</strong> - Executes a block of code if a condition is true
+                                    </li>
+                                    <li><strong>if...else statement</strong> - Executes one block if a condition is
+                                        true, another if it's false</li>
+                                    <li><strong>if...else if...else statement</strong> - Tests multiple conditions in
+                                        sequence</li>
+                                    <li><strong>switch statement</strong> - Selects one of many code blocks to execute
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Basic Syntax</h3>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="code-block">
+                                    <span class="comment">// if statement</span>
+                                    <span class="keyword">if</span> (condition) {
+                                    <span class="comment">// code to execute if condition is true</span>
+                                    }
+
+                                    <br>
+                                    <span class="comment">// if...else statement</span>
+                                    <span class="keyword">if</span> (condition) {
+                                    <span class="comment">// code to execute if condition is true</span>
+                                    } <span class="keyword">else</span> {
+                                    <span class="comment">// code to execute if condition is false</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="code-block">
+                                    <span class="comment">// if...else if...else statement</span>
+                                    <span class="keyword">if</span> (condition1) {
+                                    <span class="comment">// code to execute if condition1 is true</span>
+                                    } <span class="keyword">else if</span> (condition2) {
+                                    <span class="comment">// code to execute if condition2 is true</span>
+                                    } <span class="keyword">else</span> {
+                                    <span class="comment">// code to execute if all conditions are false</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Conditionals Demo -->
+                        <div class="demo-section">
+                            <h3 class="mb-3">Conditionals in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input type="number" id="age-input" class="form-control"
+                                            placeholder="Enter your age" value="18">
+                                        <button class="btn btn-primary" id="check-age-button">Check Age</button>
+                                    </div>
+                                    <div id="age-result" class="alert alert-info d-none">
+                                        <!-- Result will be displayed here -->
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-block">
+                                        <span class="keyword">function</span> <span class="function">checkAge</span>() {
+                                        <span class="keyword">const</span> <span class="variable">age</span> = <span class="function">parseInt</span>(<span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"age-input"</span>).<span class="variable">value</span>);
+                                        <span class="keyword">let</span> <span class="variable">message</span> = <span class="string">""</span>;
+
+                                        <br>
+                                        <span class="keyword">if</span> (<span class="variable">age</span> < <span class="number">13</span>) {
+                                            <span class="variable">message</span> = <span class="string">"You are a child."</span>;
+                                            } <span class="keyword">else if</span> (<span class="variable">age</span> < <span class="number">18</span>) {
+                                                <span class="variable">message</span> = <span class="string">"You are a teenager."</span>;
+                                                } <span class="keyword">else if</span> (<span
+                                                    class="variable">age</span> < <span class="number">65</span>) {
+                                                    <span class="variable">message</span> = <span class="string">"You are an adult."</span>;
+                                                    } <span class="keyword">else</span> {
+                                                    <span class="variable">message</span> = <span class="string">"You are a senior."</span>;
+                                                    }
+
+                                                    <span class="keyword">return</span> <span
+                                                        class="variable">message</span>;
+                                                    }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Creating Elements Demo -->
+                        <div class="demo-section">
+                            <h3 class="mb-3">Creating Elements in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Element Creator</h5>
+                                            <div class="mb-3">
+                                                <label for="element-type" class="form-label">Element Type:</label>
+                                                <select id="element-type" class="form-select">
+                                                    <option value="p">Paragraph</option>
+                                                    <option value="h3">Heading (H3)</option>
+                                                    <option value="button">Button</option>
+                                                    <option value="img">Image</option>
+                                                    <option value="div">Div</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="element-content" class="form-label">Content:</label>
+                                                <input type="text" id="element-content" class="form-control"
+                                                    placeholder="Enter content">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="element-class" class="form-label">CSS Class:</label>
+                                                <input type="text" id="element-class" class="form-control"
+                                                    placeholder="Enter CSS class">
+                                            </div>
+                                            <button id="create-element-button" class="btn btn-primary">Create
+                                                Element</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card h-100">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">Element Display</h5>
+                                        </div>
+                                        <div class="card-body" id="element-display">
+                                            <p class="text-muted text-center">Created elements will appear here</p>
+                                        </div>
+                                        <div class="card-footer text-end">
+                                            <button id="clear-elements-button" class="btn btn-secondary btn-sm">Clear
+                                                All</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Logical Operators section -->
+                    <section id="logical-operators" class="mb-5">
+                        <h2>Logical Operators</h2>
+                        <p class="lead">Combining and manipulating boolean values with AND, OR, and NOT operators.</p>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Types of Logical Operators</h5>
+                                        <ul>
+                                            <li><strong>AND (&&)</strong> - Returns true if both operands are true</li>
+                                            <li><strong>OR (||)</strong> - Returns true if at least one operand is true
+                                            </li>
+                                            <li><strong>NOT (!)</strong> - Returns the opposite of the operand's boolean
+                                                value</li>
+                                        </ul>
+                                        <p>These operators are essential for creating complex conditions in your programs.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="code-block">
+                                    <span class="comment">// AND operator</span>
+                                    <span class="keyword">if</span> (age >= <span class="number">18</span> && hasLicense) {
+                                    <span class="function">console.log</span>(<span class="string">"You can drive"</span>);
+                                    }
+
+                                    <br>
+                                    <span class="comment">// OR operator</span>
+                                    <span class="keyword">if</span> (isWeekend || isHoliday) {
+                                    <span class="function">console.log</span>(<span class="string">"No work today!"</span>);
+                                    }
+
+                                    <br>
+                                    <span class="comment">// NOT operator</span>
+                                    <span class="keyword">if</span> (!isLoggedIn) {
+                                    <span class="function">console.log</span>(<span class="string">"Please log in
+                                        first"</span>);
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Logical Operators Demo -->
+                        <div class="demo-section">
+                            <h3 class="mb-3">Logical Operators in Action</h3>
+
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Movie Theater Ticket Price Calculator</h5>
+                                            <div class="row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="visitor-age" class="form-label">Age:</label>
+                                                    <input type="number" id="visitor-age" class="form-control"
+                                                        value="25">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label">Day of Week:</label>
+                                                    <select id="day-of-week" class="form-select">
+                                                        <option value="weekday">Weekday</option>
+                                                        <option value="weekend">Weekend</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label">Student?</label>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" id="is-student">
+                                                        <label class="form-check-label" for="is-student">Yes</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button id="calculate-price-button" class="btn btn-primary">Calculate Ticket Price</button>
+                                            <div id="price-result" class="alert alert-info mt-3 d-none">
+                                                <!-- Result will be displayed here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Arrays section -->
+                    <section id="arrays" class="mb-5">
+                        <h2>Arrays</h2>
+                        <p class="lead">Working with ordered collections of data.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">What are Arrays?</h5>
+                                <p>Arrays are special variables that can hold multiple values. They store data in an
+                                    ordered list, where each item has a numeric index starting from 0.</p>
+
+                                <h5 class="mt-4">Creating Arrays</h5>
+                                <div class="code-block">
+                                    <span class="comment">// Array literal syntax</span>
+                                    <span class="keyword">const</span> <span class="variable">fruits</span> = [<span
+                                        class="string">"apple"</span>, <span class="string">"banana"</span>, <span
+                                        class="string">"orange"</span>];
+
+                                    <br>
+                                    <span class="comment">// Array with multiple data types</span>
+                                    <span class="keyword">const</span> <span class="variable">mixedArray</span> = [<span
+                                        class="number">42</span>, <span class="string">"hello"</span>, <span
+                                        class="keyword">true</span>];
+                                </div>
+
+                                <h5 class="mt-4">Accessing Array Elements</h5>
+                                <div class="code-block">
+                                    <span class="keyword">const</span> <span class="variable">colors</span> = [<span
+                                        class="string">"red"</span>, <span class="string">"green"</span>, <span
+                                        class="string">"blue"</span>];
+
+                                    <br>
+                                        <span class="comment">// Access by index</span>
+                                    <span class="function">console.log</span>(<span class="variable">colors</span>[<span
+                                        class="number">0</span>]); <span class="comment">// "red"</span>
+                                    <span class="function">console.log</span>(<span class="variable">colors</span>[<span
+                                        class="number">2</span>]); <span class="comment">// "blue"</span>
+
+                                    <br>
+                                        <span class="comment">// Modify by index</span>
+                                    <span class="variable">colors</span>[<span class="number">1</span>] = <span
+                                        class="string">"yellow"</span>;
+                                    <span class="function">console.log</span>(<span class="variable">colors</span>);
+                                    <span class="comment">// ["red", "yellow", "blue"]</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Arrays Demo -->
+                        <div class="demo-section">
+                            <h3 class="mb-3">Arrays in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Working with a Shopping List</h5>
+                                            <div class="input-group mb-3">
+                                                <input type="text" id="item-input" class="form-control"
+                                                    placeholder="Enter an item">
+                                                <button class="btn btn-success" id="add-item-button">Add Item</button>
+                                            </div>
+                                            <div class="d-grid gap-2">
+                                                <button class="btn btn-warning" id="remove-last-button">Remove Last
+                                                    Item</button>
+                                                <button class="btn btn-danger" id="clear-items-button">Clear All
+                                                    Items</button>
+                                            </div>
+                                            <div id="array-output" class="mt-3 p-3 bg-light rounded">
+                                                Current array: []
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-block h-100">
+                                        <span class="comment">// Initial empty array</span>
+                                        <span class="keyword">let</span> <span class="variable">shoppingList</span> = [];
+
+                                        <br>
+                                        <span class="comment">// Add an item</span>
+                                        <span class="function">addItem</span>(<span class="string">"milk"</span>); <span class="comment">// shoppingList is now ["milk"]</span>
+
+                                        <br>
+                                        <span class="comment">// Add another item</span>
+                                        <span class="function">addItem</span>(<span class="string">"bread"</span>); <span class="comment">// shoppingList is now ["milk", "bread"]</span>
+
+                                        <br>
+                                        <span class="comment">// Remove the last item</span>
+                                        <span class="function">removeLastItem</span>(); <span class="comment">// shoppingList is now ["milk"]</span>
+
+                                        <br>
+                                        <span class="keyword">function</span> <span
+                                            class="function">addItem</span>(<span class="variable">item</span>) {
+                                        <span class="variable">shoppingList</span>.<span
+                                            class="function">push</span>(<span class="variable">item</span>);
+                                        <span class="function">updateDisplay</span>();
+                                        }
+
+                                        <br>
+                                        <span class="keyword">function</span> <span
+                                            class="function">removeLastItem</span>() {
+                                        <span class="variable">shoppingList</span>.<span class="function">pop</span>();
+                                        <span class="function">updateDisplay</span>();
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Array Methods section -->
+                    <section id="array-methods" class="mb-5">
+                        <h2>Array Methods <span class="optional-tag">Optional</span></h2>
+                        <p class="lead">Powerful tools for working with arrays: push, pop, map, filter, and more.</p>
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Example</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>push()</code></td>
+                                        <td>Adds one or more elements to the end of an array</td>
+                                        <td><code>fruits.push("kiwi");</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>pop()</code></td>
+                                        <td>Removes the last element from an array</td>
+                                        <td><code>fruits.pop();</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>unshift()</code></td>
+                                        <td>Adds one or more elements to the beginning of an array</td>
+                                        <td><code>fruits.unshift("strawberry");</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>shift()</code></td>
+                                        <td>Removes the first element from an array</td>
+                                        <td><code>fruits.shift();</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>splice()</code></td>
+                                        <td>Changes array content by removing/replacing elements</td>
+                                        <td><code>fruits.splice(1, 1, "grape");</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>slice()</code></td>
+                                        <td>Returns a shallow copy of a portion of an array</td>
+                                        <td><code>const newArray = fruits.slice(0, 2);</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>indexOf()</code></td>
+                                        <td>Returns the first index at which a given element is found</td>
+                                        <td><code>fruits.indexOf("banana");</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>join()</code></td>
+                                        <td>Joins all elements of an array into a string</td>
+                                        <td><code>fruits.join(", ");</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Advanced Array Methods -->
+                        <h3>Advanced Array Methods <span class="optional-tag">Optional</span></h3>
+                        <p>Modern JavaScript provides powerful higher-order array methods for transforming and filtering
+                            data:</p>
+
+                        <div class="code-block">
+                            <span class="keyword">const</span> <span class="variable">numbers</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];
+
+                            <br>
+                            <span class="comment">// map() - creates a new array by calling a function on each element</span>
+                            <span class="keyword">const</span> <span class="variable">doubled</span> = <span class="variable">numbers</span>.<span class="function">map</span>(<span class="variable">num</span> => <span class="variable">num</span> * <span class="number">2</span>); <span class="comment">// doubled is [2, 4, 6, 8, 10]</span>
+
+                            <br>
+                            <span class="comment">// filter() - creates a new array with elements that pass a test</span>
+                            <span class="keyword">const</span> <span class="variable">evenNumbers</span> = <span class="variable">numbers</span>.<span class="function">filter</span>(<span class="variable">num</span> => <span class="variable">num</span> % <span class="number">2</span> === <span class="number">0</span>); <span class="comment">// evenNumbers is [2, 4]</span>
+
+                            <br>
+                            <span class="comment">// reduce() - reduces array to a single value</span>
+                            <span class="keyword">const</span> <span class="variable">sum</span> = <span class="variable">numbers</span>.<span class="function">reduce</span>((<span class="variable">total</span>, <span class="variable">num</span>) => <span class="variable">total</span> + <span class="variable">num</span>, <span class="number">0</span>); <span class="comment">// sum is 15</span>
+                        </div>
+
+                        <!-- Array Methods Demo -->
+                        <div class="demo-section mt-4">
+                            <h3 class="mb-3">Array Methods in Action</h3>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Transform and Filter Data</h5>
+                                            <p>Original array: <code>[12, 5, 8, 130, 44]</code></p>
+                                            <div class="d-grid gap-2">
+                                                <button class="btn btn-info" id="find-even-button">Find Even
+                                                    Numbers</button>
+                                                <button class="btn btn-success" id="multiply-by-two-button">Multiply All
+                                                    By 2</button>
+                                                <button class="btn btn-primary" id="sum-all-button">Sum All
+                                                    Numbers</button>
+                                                <button class="btn btn-warning" id="find-large-button">Find Numbers >
+                                                    10</button>
+                                                <button class="btn btn-danger" id="sort-button">Sort Numbers</button>
+                                            </div>
+                                            <div id="array-methods-output" class="mt-3 p-3 bg-light rounded">
+                                                Result will appear here
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-block h-100">
+                                        <span class="keyword">const</span> <span class="variable">numbers</span> =
+                                        [<span class="number">12</span>, <span class="number">5</span>, <span
+                                            class="number">8</span>, <span class="number">130</span>, <span
+                                            class="number">44</span>];
+
+                                        <span class="comment">// Find even numbers</span>
+                                        <span class="keyword">function</span> <span
+                                            class="function">findEvenNumbers</span>() {
+                                        <span class="keyword">return</span> <span class="variable">numbers</span>.<span
+                                            class="function">filter</span>(<span class="variable">num</span> => <span
+                                            class="variable">num</span> % <span class="number">2</span> === <span
+                                            class="number">0</span>);
+                                        }
+
+                                        <span class="comment">// Multiply all by 2</span>
+                                        <span class="keyword">function</span> <span
+                                            class="function">multiplyByTwo</span>() {
+                                        <span class="keyword">return</span> <span class="variable">numbers</span>.<span
+                                            class="function">map</span>(<span class="variable">num</span> => <span
+                                            class="variable">num</span> * <span class="number">2</span>);
+                                        }
+
+                                        <span class="comment">// Sum all numbers</span>
+                                        <span class="keyword">function</span> <span class="function">sumAll</span>() {
+                                        <span class="keyword">return</span> <span class="variable">numbers</span>.<span
+                                            class="function">reduce</span>((<span class="variable">sum</span>, <span
+                                            class="variable">num</span>) => <span class="variable">sum</span> + <span
+                                            class="variable">num</span>, <span class="number">0</span>);
+                                        }
+
+                                        <span class="comment">// Find numbers > 10</span>
+                                        <span class="keyword">function</span> <span
+                                            class="function">findLargeNumbers</span>() {
+                                        <span class="keyword">return</span> <span class="variable">numbers</span>.<span
+                                            class="function">filter</span>(<span class="variable">num</span> => <span
+                                            class="variable">num</span> > <span class="number">10</span>);
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Creating Elements section -->
+                    <section id="creating-elements" class="mb-5">
+                        <h2>Creating HTML Elements</h2>
+                        <p class="lead">Dynamically generating HTML elements with JavaScript.</p>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Creating Elements</h5>
+                                        <p>JavaScript allows you to create HTML elements programmatically using the
+                                            <code>document.createElement()</code> method.</p>
+                                        <p>The basic process for adding new elements to a page is:</p>
+                                        <ol>
+                                            <li>Create the element using <code>document.createElement()</code></li>
+                                            <li>Set properties (text content, attributes, classes, etc.)</li>
+                                            <li>Append the element to an existing element in the DOM</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="code-block h-100">
+                                    <span class="comment">// Create a new paragraph element</span>
+                                    <span class="keyword">const</span> <span class="variable">paragraph</span> = <span class="keyword">document</span>.<span class="function">createElement</span>(<span class="string">"p"</span>);
+
+                                        <br>
+                                    <span class="comment">// Set its text content</span>
+                                    <span class="variable">paragraph</span>.<span class="variable">textContent</span> = <span class="string">"This is a dynamically created paragraph."</span>;
+
+                                    <br>
+                                    <span class="comment">// Add a CSS class</span>
+                                    <span class="variable">paragraph</span>.<span class="variable">className</span> = <span class="string">"dynamic-text"</span>;
+
+                                    <br>
+                                    <span class="comment">// Create a container reference</span>
+                                    <span class="keyword">const</span> <span class="variable">container</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"container"</span>);
+
+                                    <br>
+                                    <span class="comment">// Append the paragraph to the container</span>
+                                    <span class="variable">container</span>.<span class="function">appendChild</span>(<span class="variable">paragraph</span>);
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Modifying the DOM section -->
+                    <section id="modifying-dom" class="mb-5">
+                        <h2>Modifying the DOM Tree</h2>
+                        <p class="lead">Adding, updating, and removing elements from the document.</p>
+                    
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Common DOM Modification Methods</h5>
+                                <p>Once we've created elements, we can use various methods to add, remove, or replace them in the DOM:</p>
+                    
+                                <table class="table">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Method</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>appendChild()</code></td>
+                                            <td>Adds a node to the end of the list of children of a specified parent node</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>insertBefore()</code></td>
+                                            <td>Inserts a node before a reference node as a child of a specified parent node</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>removeChild()</code></td>
+                                            <td>Removes a child node from the DOM and returns the removed node</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>replaceChild()</code></td>
+                                            <td>Replaces a child node with a new node</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    
+                        <div class="code-block">
+                            <span class="comment">// Create a new element</span>
+                            <span class="keyword">const</span> <span class="variable">newElement</span> = <span
+                                class="keyword">document</span>.<span class="function">createElement</span>(<span
+                                class="string">"li"</span>);
+                            <span class="variable">newElement</span>.<span class="variable">textContent</span> = <span class="string">"New Item"</span>;
+                    
+                            <br>
+                            <span class="comment">// Append to an existing element</span>
+                            <span class="variable">parentElement</span>.<span class="function">appendChild</span>(<span class="variable">newElement</span>);
+                    
+                            <br>
+                            <span class="comment">// Insert before a specific element</span>
+                            <span class="variable">parentElement</span>.<span class="function">insertBefore</span>(<span class="variable">newElement</span>, <span class="variable">referenceElement</span>);
+                    
+                            <br>
+                            <span class="comment">// Remove an element</span>
+                            <span class="variable">parentElement</span>.<span class="function">removeChild</span>(<span class="variable">childElement</span>);
+                    
+                            <br>
+                            <span class="comment">// Replace an element</span>
+                            <span class="variable">parentElement</span>.<span class="function">replaceChild</span>(<span class="variable">newElement</span>, <span class="variable">oldElement</span>);
+                        </div>
+                    
+                        <!-- DOM Modification Demo -->
+                        <div class="demo-section">
+                            <h3 class="mb-3">DOM Modification in Action</h3>
+                    
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">Task List Manager</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="input-group mb-3">
+                                                <input type="text" id="task-input" class="form-control" placeholder="Enter a task">
+                                                <button class="btn btn-primary" id="add-task-button">Add Task</button>
+                                            </div>
+                                            <ul id="task-list" class="list-group">
+                                                <li class="list-group-item">Complete homework <button
+                                                        class="btn btn-danger btn-sm float-end remove-task">Remove</button></li>
+                                                <li class="list-group-item">Buy groceries <button
+                                                        class="btn btn-danger btn-sm float-end remove-task">Remove</button></li>
+                                                <li class="list-group-item">Walk the dog <button
+                                                        class="btn btn-danger btn-sm float-end remove-task">Remove</button></li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button id="clear-tasks-button" class="btn btn-warning">Clear All Tasks</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="code-block h-100">
+                                        <span class="comment">// Add a new task</span>
+                                        <span class="keyword">function</span> <span class="function">addTask</span>() {
+                                        <span class="keyword">const</span> <span class="variable">taskText</span> = <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"task-input"</span>).<span class="variable">value</span>;
+                    
+                                        <span class="keyword">if</span> (<span class="variable">taskText</span>.<span class="function">trim</span>() === <span class="string">""</span>) {
+                                        <span class="keyword">return</span>; <span class="comment">// Don't add empty tasks</span>
+                                        }
+                    
+                                        <br>
+                                        <span class="comment">// Create new list item</span>
+                                        <span class="keyword">const</span> <span class="variable">li</span> = <span class="keyword">document</span>.<span class="function">createElement</span>(<span class="string">"li"</span>);
+                                        <span class="variable">li</span>.<span class="variable">className</span> = <span class="string">"list-group-item"</span>;
+                                        <span class="variable">li</span>.<span class="variable">textContent</span> = <span class="variable">taskText</span>;
+                    
+                                        <br>
+                                        <span class="comment">// Create remove button</span>
+                                        <span class="keyword">const</span> <span class="variable">removeBtn</span> = <span class="keyword">document</span>.<span class="function">createElement</span>(<span class="string">"button"</span>);
+                                        <span class="variable">removeBtn</span>.<span class="variable">className</span> = <span class="string">"btn btn-danger btn-sm float-end remove-task"</span>;
+                                        <span class="variable">removeBtn</span>.<span class="variable">textContent</span> = <span class="string">"Remove"</span>;
+                    
+                                        <br>
+                                        <span class="comment">// Add button to list item</span>
+                                        <span class="variable">li</span>.<span class="function">appendChild</span>(<span class="variable">removeBtn</span>);
+                    
+                                        <br>
+                                        <span class="comment">// Add list item to the task list</span>
+                                        <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"task-list"</span>).<span class="function">appendChild</span>(<span class="variable">li</span>);
+                    
+                                        <br>
+                                        <span class="comment">// Clear the input</span>
+                                        <span class="keyword">document</span>.<span class="function">getElementById</span>(<span class="string">"task-input"</span>).<span class="variable">value</span> = <span class="string">""</span>;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Practice Exercises section -->
+                    <section id="practice-exercises" class="mb-5">
+                        <h2>Practice Exercises</h2>
+                        <p class="lead">Test your skills with these interactive exercises.</p>
+                    
+                        <!-- Exercise 1: Conditionals -->
+                        <div class="practice-container">
+                            <h3>Exercise 1: Conditional Statements</h3>
+                            <p>Write a function to determine the ticket price based on age and membership status.</p>
+                    
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="Write your code here" id="exercise1-input"
+                                            style="height: 200px"></textarea>
+                                        <label for="exercise1-input">Write your code here</label>
+                                    </div>
+                                    <button class="btn btn-primary" id="exercise1-run">Check Answer</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Requirements</h5>
+                                            <p>Write a function called <code>calculateTicketPrice</code> that takes two parameters:</p>
+                                            <ul class="mb-0">
+                                                <li><code>age</code> (number)</li>
+                                                <li><code>isMember</code> (boolean)</li>
+                                            </ul>
+                                            <hr>
+                                            <p>Ticket pricing rules:</p>
+                                            <ul class="mb-0">
+                                                <li>Base price: $10</li>
+                                                <li>Children (under 12): 50% off</li>
+                                                <li>Seniors (65+): 30% off</li>
+                                                <li>Members get an additional 20% off</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <div id="exercise1-output" class="alert" style="display: none;"></div>
+                        </div>
+                    
+                        <!-- Exercise 2: Arrays -->
+                        <div class="practice-container">
+                            <h3>Exercise 2: Working with Arrays</h3>
+                            <p>Create a shopping cart manager that calculates totals and applies discounts.</p>
+                    
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="Write your code here" id="exercise2-input"
+                                            style="height: 250px"></textarea>
+                                        <label for="exercise2-input">Write your code here</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button class="btn btn-primary me-2" id="exercise2-run">Run Code</button>
+                                        <button class="btn btn-secondary" id="exercise2-reset">Reset</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Requirements</h5>
+                                            <p>Create a <code>ShoppingCart</code> object with the following:</p>
+                                            <ul>
+                                                <li>An <code>items</code> array to store products</li>
+                                                <li><code>addItem(name, price, quantity)</code> method to add a product</li>
+                                                <li><code>removeItem(index)</code> method to remove a product</li>
+                                                <li><code>calculateTotal()</code> method to calculate the total price</li>
+                                                <li><code>applyDiscount(percent)</code> method to apply a discount</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <div id="exercise2-output" class="alert" style="display: none;"></div>
+                            <div id="cart-display" class="bg-light p-3 rounded" style="display: none;">
+                                <h4>Shopping Cart Contents</h4>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cart-items">
+                                        <!-- Cart items will appear here -->
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" class="text-end"><strong>Grand Total:</strong></td>
+                                            <td id="cart-total"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    
+                        <!-- Exercise 3: DOM Manipulation -->
+                        <div class="practice-container">
+                            <h3>Exercise 3: DOM Manipulation</h3>
+                            <p>Create a color palette generator that adds color swatches to the page.</p>
+                    
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" placeholder="Write your code here" id="exercise3-input"
+                                            style="height: 200px"></textarea>
+                                        <label for="exercise3-input">Write your code here</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button class="btn btn-primary me-2" id="exercise3-run">Run Code</button>
+                                        <button class="btn btn-secondary" id="exercise3-reset">Reset</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Requirements</h5>
+                                            <p>Write a function called <code>generateColorPalette</code> that:</p>
+                                            <ul>
+                                                <li>Takes a base color in hex format (e.g. "#3498db")</li>
+                                                <li>Generates 5 variations of the color (lighter and darker)</li>
+                                                <li>Creates a color swatch for each variation</li>
+                                                <li>Adds all swatches to the <code>color-palette</code> div</li>
+                                                <li>Shows the hex code for each color</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                            <div id="exercise3-output" class="alert" style="display: none;"></div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div id="color-palette" class="d-flex flex-wrap justify-content-center">
+                                        <!-- Color swatches will appear here -->
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text" for="base-color">Base Color:</label>
+                                        <input type="color" class="form-control form-control-color" id="base-color" value="#3498db"
+                                            title="Choose a color">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Session Summary -->
+                    <section id="session-summary">
+                        <h2>Session Summary</h2>
+                        <p class="lead">In this session, we covered the following topics:</p>
+                    
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Key Concepts Covered</h5>
+                                <ul class="mb-0">
+                                    <li>Conditional statements: if, else if, else, switch</li>
+                                    <li>Logical operators: AND (&&), OR (||), NOT (!)</li>
+                                    <li>Arrays: creating, accessing, and modifying elements</li>
+                                    <li>Array methods: push, pop, map, filter, reduce</li>
+                                    <li>Creating HTML elements with JavaScript</li>
+                                    <li>Modifying the DOM tree: adding, updating, and removing elements</li>
+                                </ul>
+                            </div>
+                        </div>
+                    
+                        <h3>Next Steps</h3>
+                        <p>In the next session, we'll build on these concepts by learning about loops, event delegation, and working with
+                            JavaScript objects. We'll also continue developing our grocery list application by adding checkboxes and
+                            counting items.</p>
+                    
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Additional Resources</h5>
+                                        <ul class="mb-0">
+                                            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling"
+                                                    target="_blank">MDN: Control Flow</a></li>
+                                            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"
+                                                    target="_blank">MDN: Array Reference</a></li>
+                                            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement"
+                                                    target="_blank">MDN: Creating DOM Elements</a></li>
+                                            <li><a href="https://www.w3schools.com/js/js_array_methods.asp" target="_blank">W3Schools:
+                                                    JavaScript Array Methods</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Practice Challenges</h5>
+                                        <p>Try these challenges to reinforce your learning:</p>
+                                        <ol class="mb-0">
+                                            <li>Create a TODO list app with the ability to mark items as complete</li>
+                                            <li>Build a simple product filter that lets users filter by category and price</li>
+                                            <li>Build a dynamic form that adds or removes fields based on user selections</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="text-center mt-4 mb-4">
+                            <a href="session4.html" class="btn btn-primary btn-lg">Continue to Session 4: Loops & Advanced DOM
+                                Interaction</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>JavaScript Fundamentals</h4>
+                    <p>Session 3: Control Flow & More DOM Manipulation</p>
+                    <p><a href="index.html" class="text-white">Back to Course Home</a></p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <nav>
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+                            <li class="list-inline-item"><a href="session4.html" class="text-white">Next Session</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <p>© BYU IS 120: Introduction to Web Dev</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/session3.js"></script>
+</body>
+
+</html>

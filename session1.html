@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session 1: JavaScript Fundamentals</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" tabindex="0">
+    <button id="back-to-top" class="btn btn-primary rounded-circle" onclick="scrollToTop()">↑</button>
+
+    <header class="text-center">
+        <div class="container">
+            <h1 class="display-5">Session 1: JavaScript Fundamentals</h1>
+            <p class="lead">Understanding the basics of JavaScript and the Document Object Model</p>
+            <div class="mt-3">
+                <a href="index.html" class="btn btn-outline-light btn-sm me-2">← Back to Course Home</a>
+                <a href="session2.html" class="btn btn-light btn-sm">Next Session →</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <!-- Progress tracker / Table of contents -->
+            <div class="col-md-3">
+                <div class="progress-tracker">
+                    <h5>In This Session</h5>
+                    <nav id="navbar-example3" class="navbar bg-light flex-column align-items-stretch p-3 rounded mb-4">
+                        <nav class="nav nav-pills flex-column">
+                            <a class="nav-link" href="#intro">Introduction to JavaScript</a>
+                            <a class="nav-link" href="#the-dom">The DOM</a>
+                            <a class="nav-link" href="#variables">JavaScript Variables</a>
+                            <a class="nav-link" href="#data-types">Data Types</a>
+                            <a class="nav-link" href="#browser-console">Browser Console</a>
+                            <a class="nav-link" href="#dom-selection">DOM Selection</a>
+                            <a class="nav-link" href="#practice-exercises">Practice Exercises</a>
+                            <a class="nav-link" href="#session-summary">Session Summary</a>
+                        </nav>
+                    </nav>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Learning Objectives</h5>
+                            <ul class="mb-0">
+                                <li>Understand what JavaScript is and how it works</li>
+                                <li>Learn about the Document Object Model (DOM)</li>
+                                <li>Create and use variables with different data types</li>
+                                <li>Use the browser console for JavaScript debugging</li>
+                                <li>Select and manipulate DOM elements</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main content -->
+            <div class="col-md-9">
+                <div id="content" class="scrollspy-example rounded-2" tabindex="0">
+                    <!-- Introduction section -->
+                    <section id="intro" class="mb-5">
+                        <h2>Introduction to JavaScript</h2>
+                        <p class="lead">JavaScript is a programming language that allows you to make web pages
+                            interactive.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">What is JavaScript?</h5>
+                                <p>JavaScript is a high-level, interpreted programming language that conforms to the
+                                    ECMAScript specification. It was created to make web pages dynamic and interactive.
+                                </p>
+                                <p>With JavaScript, you can:</p>
+                                <ul>
+                                    <li>Respond to user actions</li>
+                                    <li>Modify HTML content and CSS styles</li>
+                                    <li>Validate form data</li>
+                                    <li>Create animations and visual effects</li>
+                                    <li>Build complete web applications</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>How JavaScript Works with HTML and CSS</h3>
+                        <p>Think of a webpage as having three layers:</p>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="card concept-card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">HTML</h5>
+                                        <p class="card-text text-center">The structure layer</p>
+                                        <div class="text-center">
+                                            <span class="fs-1">🏗️</span>
+                                        </div>
+                                        <p class="card-text mt-3">HTML defines the elements on your page and their
+                                            hierarchy - like the "skeleton" of your webpage.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card concept-card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">CSS</h5>
+                                        <p class="card-text text-center">The presentation layer</p>
+                                        <div class="text-center">
+                                            <span class="fs-1">🎨</span>
+                                        </div>
+                                        <p class="card-text mt-3">CSS controls how the HTML elements look - colors,
+                                            fonts, layouts, and styling.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card concept-card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">JavaScript</h5>
+                                        <p class="card-text text-center">The behavior layer</p>
+                                        <div class="text-center">
+                                            <span class="fs-1">🧠</span>
+                                        </div>
+                                        <p class="card-text mt-3">JavaScript makes the page interactive - it responds to
+                                            user actions and can change the HTML and CSS dynamically.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Adding JavaScript to a Webpage</h3>
+                        <p>There are three main ways to include JavaScript in your HTML:</p>
+
+                        <div class="accordion" id="javascriptInclusionAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        1. Inline JavaScript
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingOne" data-bs-parent="#javascriptInclusionAccordion">
+                                    <div class="accordion-body">
+                                        <p>JavaScript can be written directly in HTML elements using the
+                                            <code>onclick</code>, <code>onload</code>, and other event attributes.
+                                        </p>
+                                        <div class="code-block">
+                                            <span class="code-block-nowrap">&lt;button <span class="keyword">onclick</span>=<span class="string">"alert('Hello, World!')"</span>&gt;Click Me&lt;/button&gt;</span>
+                                            
+                                        </div>
+                                        <p class="text-muted"><em>Note: This method is generally avoided for more
+                                                complex code as it mixes HTML and JavaScript.</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        2. Internal JavaScript
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                    data-bs-parent="#javascriptInclusionAccordion">
+                                    <div class="accordion-body">
+                                        <p>JavaScript can be placed inside <code>&lt;script&gt;</code> tags in the HTML
+                                            document:</p>
+                                        <div class="code-block">
+                                            <span class="code-block-nowrap">&lt;!DOCTYPE html&gt;</span>
+                                            <span class="code-block-nowrap">&lt;html&gt;</span>
+                                            <span class="code-block-nowrap">&lt;head&gt;</span>
+                                            <span class="code-block-nowrap">&lt;title&gt;My Page&lt;/title&gt;</span>
+                                            <span class="code-block-nowrap">&lt;/head&gt;</span>
+                                            <span class="code-block-nowrap">&lt;body&gt;</span>
+                                            <span class="code-block-nowrap">&lt;h1&gt;Hello, World!&lt;/h1&gt;</span>
+                                            <span class="code-block-nowrap"><span class="comment">&lt;!-- Internal JavaScript --&gt;</span>
+                                            <br>
+                                            &lt;script&gt;<span class="function">alert</span>(<span class="string">"Hello from JavaScript!"</span>);</span><span class="code-block-nowrap">&lt;/script&gt;</span>
+                                            <span class="code-block-nowrap">&lt;/body&gt;</span>
+                                            <span class="code-block-nowrap">&lt;/html&gt;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                        3. External JavaScript (Recommended)
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="headingThree" data-bs-parent="#javascriptInclusionAccordion">
+                                    <div class="accordion-body">
+                                        <p>JavaScript can be placed in external files and linked to the HTML document:
+                                        </p>
+                                        <div class="code-block">
+                                            <span class="comment">&lt;!-- In your HTML file --&gt;</span>
+                                            &lt;script <span class="keyword">src</span>=<span
+                                                class="string">"script.js"</span>&gt;&lt;/script&gt;
+                                        </div>
+
+                                        <div class="code-block">
+                                            <span class="comment">// In script.js</span>
+                                            <span class="function">alert</span>(<span class="string">"Hello from external JavaScript file!"</span>);
+                                        </div>
+                                        <p><strong>Benefits of external JavaScript:</strong></p>
+                                        <ul>
+                                            <li>Separates HTML from JavaScript code</li>
+                                            <li>Makes both HTML and JavaScript easier to read and maintain</li>
+                                            <li>Allows the browser to cache the JavaScript file</li>
+                                            <li>Can be reused across multiple pages</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- The DOM section -->
+                    <section id="the-dom" class="mb-5">
+                        <h2>The Document Object Model (DOM)</h2>
+                        <p class="lead">The DOM is a programming interface for HTML and XML documents that represents
+                            the page as a tree of objects.</p>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p>When a browser loads a webpage, it creates a Document Object Model of the page. The
+                                    DOM represents the document as nodes and objects, allowing programming languages
+                                    like JavaScript to interact with the page.</p>
+
+                                <p>Think of the DOM as a tree-like structure where each branch is a node (HTML element),
+                                    and the document itself is the root node.</p>
+
+                                <p>With JavaScript, you can:</p>
+                                <ul>
+                                    <li>Find elements in the document</li>
+                                    <li>Change element content</li>
+                                    <li>Modify element styles</li>
+                                    <li>Create new elements</li>
+                                    <li>Remove existing elements</li>
+                                    <li>React to user interactions with elements</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">DOM Tree Structure</h5>
+                                        <img src="https://www.w3schools.com/js/pic_htmltree.gif"
+                                            class="img-fluid border rounded" alt="DOM Tree Structure">
+                                        <p class="card-text mt-3 text-center"><small class="text-muted">Simple
+                                                representation of a DOM tree</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DOM Demo -->
+                        <div class="demo-section">
+                            <h3 class="mb-3">DOM Exploration Demo</h3>
+                            <p>Let's explore the DOM of a simple HTML structure. Here's a basic webpage structure:</p>
+
+                            <div class="code-block">
+                                <span class="code-block-nowrap">&lt;!DOCTYPE html&gt;</span>
+                                <span class="code-block-nowrap">&lt;html&gt;</span>
+                                <span class="code-block-nowrap">&lt;head&gt;</span>
+                                <span class="code-block-nowrap">&lt;title&gt;Simple Page&lt;/title&gt;</span>
+                                <span class="code-block-nowrap">&lt;/head&gt;</span>
+                                <span class="code-block-nowrap">&lt;body&gt;</span>
+                                <span class="code-block-nowrap">&lt;h1 id="main-heading"&gt;Welcome to my page&lt;/h1&gt;</span>
+                                <span class="code-block-nowrap">&lt;p class="intro"&gt;This is a paragraph with &lt;span&gt;important&lt;/span&gt;text.&lt;/p&gt;</span>
+                                <span class="code-block-nowrap">&lt;ul&gt;</span>
+                                <span class="code-block-nowrap">&lt;li&gt;Item 1&lt;/li&gt;</span>
+                                <span class="code-block-nowrap">&lt;li&gt;Item 2&lt;/li&gt;</span>
+                                <span class="code-block-nowrap">&lt;/ul&gt;</span>
+                                <span class="code-block-nowrap">&lt;/body&gt;</span>
+                                <span class="code-block-nowrap">&lt;/html&gt;</span>
+                            </div>
+
+                            <p class="mt-3">You can explore the DOM using the browser's Developer Tools:</p>
+
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">How to Open Developer Tools</h5>
+                                    <ul>
+                                        <li><strong>Chrome/Edge:</strong> Right-click on the page and select "Inspect"
+                                            or press F12</li>
+                                        <li><strong>Firefox:</strong> Right-click on the page and select "Inspect
+                                            Element" or press F12</li>
+                                        <li><strong>Safari:</strong> Enable Developer Tools in Safari Preferences >
+                                            Advanced, then right-click and select "Inspect Element"</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <p>In the Elements/Inspector tab, you can see the DOM tree. Try expanding and collapsing
+                                nodes to explore the structure.</p>
+
+                            <div class="alert alert-primary" role="alert">
+                                <strong>Instructor Note:</strong> At this point, open the developer tools on a live
+                                webpage and demonstrate navigating the DOM tree, highlighting elements, and showing how
+                                the browser renders the page based on the DOM.
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Variables section -->
+                    <section id="variables" class="mb-5">
+                        <h2>JavaScript Variables</h2>
+                        <p class="lead">Variables are containers for storing data values.</p>
+
+                        <p>In JavaScript, you can declare variables using <code>var</code>, <code>let</code>, or
+                            <code>const</code>:
+                        </p>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Keyword</th>
+                                        <th>Description</th>
+                                        <th>Scope</th>
+                                        <th>Reassignable</th>
+                                        <th>Hoisted</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>var</code></td>
+                                        <td>Legacy way to declare variables</td>
+                                        <td>Function scope</td>
+                                        <td>Yes</td>
+                                        <td>Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>let</code></td>
+                                        <td>Modern way to declare variables that can be reassigned</td>
+                                        <td>Block scope</td>
+                                        <td>Yes</td>
+                                        <td>No</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>const</code></td>
+                                        <td>Declares constants that cannot be reassigned</td>
+                                        <td>Block scope</td>
+                                        <td>No</td>
+                                        <td>No</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="alert alert-info mt-3">
+                            <strong>Modern Recommendation:</strong> Use <code>const</code> by default, and only use
+                            <code>let</code> when you need to reassign a variable. Avoid using <code>var</code> in new
+                            code.
+                        </div>
+
+                        <h3 class="mt-4">Declaring Variables</h3>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="code-block">
+                                    <span class="comment">// Using let (can be reassigned)</span>
+                                    <span class="keyword">let</span> <span class="variable">name</span> = <span
+                                        class="string">"John"</span>;
+                                    <span class="variable">name</span> = <span class="string">"Jane"</span>; <span
+                                        class="comment">// This is allowed</span>
+
+                                    <br>
+                                    <span class="comment">// Using const (cannot be reassigned)</span>
+                                    <span class="keyword">const</span> <span class="variable">pi</span> = <span
+                                        class="number">3.14159</span>;
+                                    <span class="comment">// pi = 3.14; // This would cause an error</span>
+
+                                    <br>
+                                    <span class="comment">// Declaring without assigning a value</span>
+                                    <span class="keyword">let</span> <span class="variable">age</span>; <span
+                                        class="comment">// Value is undefined</span>
+                                    <span class="variable">age</span> = <span class="number">25</span>; <span
+                                        class="comment">// Assign value later</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Variable Naming Rules</h5>
+                                        <ul>
+                                            <li>Names can contain letters, digits, underscores, and dollar signs</li>
+                                            <li>Names must begin with a letter, $ or _</li>
+                                            <li>Names are case sensitive (<code>name</code> and <code>Name</code> are
+                                                different)</li>
+                                            <li>Reserved words (like JavaScript keywords) cannot be used as names</li>
+                                        </ul>
+                                        <h6>Examples:</h6>
+                                        <div class="code-block">
+                                            <span class="comment">// Valid names</span>
+                                            <span class="keyword">let</span> <span class="variable">firstName</span> = <span class="string">"John"</span>;
+                                            <span class="keyword">let</span> <span class="variable">_privateVar</span> = <span class="number">42</span>;
+                                            <span class="keyword">let</span> <span class="variable">$price</span> = <span class="number">9.99</span>;
+                                            <br>
+                                            <span class="comment">// Invalid names</span>
+                                            <span class="comment">// let 1stPlace = "Winner";</span>
+                                            <span class="comment">// let if = true;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Data Types section -->
+                    <section id="data-types" class="mb-5">
+                        <h2>JavaScript Data Types</h2>
+                        <p class="lead">JavaScript has several built-in data types that you can use.</p>
+
+                        <p>JavaScript is a "dynamically typed" language, which means you don't need to declare the type
+                            of a variable when you create it. The type is determined automatically when the program
+                            runs.</p>
+
+                        <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+                            <!-- String -->
+                            <div class="col">
+                                <div class="card h-100 concept-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">String</h5>
+                                        <p class="card-text">Text values enclosed in quotes</p>
+                                        <div class="code-block">
+                                            <span class="keyword">let</span> <span class="variable">name</span> = <span
+                                                class="string">"John"</span>;
+                                            <span class="keyword">let</span> <span class="variable">message</span> = <span class="string">'Hello'</span>;
+                                            <span class="keyword">let</span> <span class="variable">phrase</span> = <span class="string">`${name} says ${message}`</span>;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Number -->
+                            <div class="col">
+                                <div class="card h-100 concept-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Number</h5>
+                                        <p class="card-text">Integers and floating-point values</p>
+                                        <div class="code-block">
+                                            <span class="keyword">let</span> <span class="variable">age</span> = <span
+                                                class="number">25</span>;
+                                            <span class="keyword">let</span> <span class="variable">price</span> = <span
+                                                class="number">9.99</span>;
+                                            <span class="keyword">let</span> <span class="variable">negative</span> = <span class="number">-42</span>;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Boolean -->
+                            <div class="col">
+                                <div class="card h-100 concept-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Boolean</h5>
+                                        <p class="card-text">Logical values: true or false</p>
+                                        <div class="code-block">
+                                            <span class="keyword">let</span> <span class="variable">isAdmin</span> = <span class="boolean">true</span>;
+                                            <span class="keyword">let</span> <span class="variable">isLoggedIn</span> = <span class="boolean">false</span>;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Array -->
+                            <div class="col">
+                                <div class="card h-100 concept-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Array</h5>
+                                        <p class="card-text">Ordered list of values</p>
+                                        <div class="code-block">
+                                            <span class="keyword">let</span> <span class="variable">colors</span> = [<span class="string">"red"</span>, <span class="string">"green"</span>, <span class="string">"blue"</span>];
+                                            <span class="keyword">let</span> <span class="variable">mixed</span> = [<span class="number">1</span>, <span class="string">"hello"</span>, <span class="boolean">true</span>];
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Object -->
+                            <div class="col">
+                                <div class="card h-100 concept-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Object</h5>
+                                        <p class="card-text">Collection of key-value pairs</p>
+                                        <div class="code-block">
+                                            <span class="keyword">let</span> <span class="variable">person</span> = {
+                                            <span class="variable">name</span>: <span class="string">"John"</span>,
+                                            <span class="variable">age</span>: <span class="number">25</span>,
+                                            <span class="variable">isStudent</span>: <span class="boolean">true</span>
+                                            };
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Other Types -->
+                            <div class="col">
+                                <div class="card h-100 concept-card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Other Types</h5>
+                                        <p class="card-text">Special values in JavaScript</p>
+                                        <div class="code-block">
+                                            <span class="comment">// Undefined - variable declared but not
+                                                assigned</span>
+                                            <span class="keyword">let</span> <span class="variable">x</span>; <span
+                                                class="comment">// Value is undefined</span>
+
+                                            <span class="comment">// Null - intentional absence of value</span>
+                                            <span class="keyword">let</span> <span class="variable">empty</span> = <span
+                                                class="keyword">null</span>;
+
+                                            <span class="comment">// Symbol & BigInt (newer types)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Checking the Type of a Variable</h3>
+                        <p>You can use the <code>typeof</code> operator to check what type a variable holds:</p>
+
+                        <div class="code-block">
+                            <span class="keyword">let</span> <span class="variable">name</span> = <span class="string">"John"</span>;
+                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">typeof</span> <span class="variable">name</span>); <span class="comment">// "string"</span>
+
+                            <span class="keyword">let</span> <span class="variable">age</span> = <span class="number">25</span>;
+                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">typeof</span> <span class="variable">age</span>); <span class="comment">// "number"</span>
+
+                            <span class="keyword">let</span> <span class="variable">isAdmin</span> = <span class="boolean">true</span>;
+                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="keyword">typeof</span> <span class="variable">isAdmin</span>); <span class="comment">// "boolean"</span>
+                        </div>
+                    </section>
+
+                    <!-- Browser Console section -->
+                    <section id="browser-console" class="mb-5">
+                        <h2>The Browser Console</h2>
+                        <p class="lead">The browser console is a powerful tool for debugging JavaScript and exploring
+                            the DOM.</p>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h3>What Can You Do in the Console?</h3>
+                                <ul>
+                                    <li>Execute JavaScript code directly</li>
+                                    <li>View output from <code>console.log()</code> statements</li>
+                                    <li>See errors and warnings</li>
+                                    <li>Examine variables and objects</li>
+                                    <li>Interact with the DOM</li>
+                                </ul>
+
+                                <div class="card mt-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Common Console Methods</h5>
+                                        <ul class="mb-0">
+                                            <li><code>console.log()</code> - Output regular messages</li>
+                                            <li><code>console.error()</code> - Output error messages</li>
+                                            <li><code>console.warn()</code> - Output warning messages</li>
+                                            <li><code>console.table()</code> - Display data as a table</li>
+                                            <li><code>console.clear()</code> - Clear the console</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Try These in Your Console</h5>
+                                        <div class="code-block">
+                                            <span class="comment">// Basic output</span>
+                                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Hello, World!"</span>);
+
+                                            <br>
+                                            <span class="comment">// Math operations</span>
+                                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="number">5</span> + <span class="number">10</span>);
+
+                                            <br>
+                                            <span class="comment">// Working with variables</span>
+                                            <span class="keyword">let</span> <span class="variable">name</span> = <span class="string">"JavaScript"</span>;
+                                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="string">"Hello, "</span> + <span class="variable">name</span> + <span class="string">"!"</span>);
+
+                                            <br>
+                                            <span class="comment">// Displaying objects</span>
+                                            <span class="keyword">let</span> <span class="variable">person</span> = {
+                                            <span class="variable">name</span>: <span class="string">"John"</span>,
+                                            <span class="variable">age</span>: <span class="number">25</span>
+                                        };
+                                            <span class="keyword">console</span>.<span class="function">log</span>(<span class="variable">person</span>);
+
+                                            <br>
+                                            <span class="comment">// Creating a popup alert</span>
+                                            <span class="function">alert</span>(<span class="string">"This is an alert!"</span>);
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Console Demo -->
+                        <div class="demo-section">
+                            <h3 class="mb-3">Browser Console Demo</h3>
+
+                            <div class="alert alert-primary" role="alert">
+                                <strong>Instructor Note:</strong> At this point, open the browser console and
+                                demonstrate the examples above in real-time. Show students how to enter commands and
+                                view the results.
+                            </div>
+
+                            <p>Let's practice using the console to explore JavaScript variables and operations:</p>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">Try It</span>
+                                        <input type="text" id="console-input" class="form-control"
+                                            placeholder="Enter JavaScript code">
+                                        <button class="btn btn-primary" type="button" id="execute-btn">Execute</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="output-display" id="console-output">
+                                        <!-- Output will be displayed here -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info">
+                                <strong>Try these examples:</strong>
+                                <ul class="mb-0">
+                                    <li><code>5 + 10</code></li>
+                                    <li><code>"Hello" + " " + "World"</code></li>
+                                    <li><code>typeof 42</code></li>
+                                    <li><code>typeof "text"</code></li>
+                                    <li><code>typeof true</code></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- DOM Selection section -->
+                    <section id="dom-selection" class="mb-5">
+                        <h2>DOM Selection</h2>
+                        <p class="lead">JavaScript can select and manipulate HTML elements in the DOM.</p>
+
+                        <p>Before you can modify an element, you need to find and select it. JavaScript provides several
+                            methods to select elements from the DOM:</p>
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Returns</th>
+                                        <th>Example</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>getElementById()</code></td>
+                                        <td>Selects an element by its id attribute</td>
+                                        <td>Single element</td>
+                                        <td><code>document.getElementById("main-heading")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>getElementsByClassName()</code></td>
+                                        <td>Selects elements by their class</td>
+                                        <td>HTMLCollection (array-like)</td>
+                                        <td><code>document.getElementsByClassName("btn")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>getElementsByTagName()</code></td>
+                                        <td>Selects elements by their tag name</td>
+                                        <td>HTMLCollection (array-like)</td>
+                                        <td><code>document.getElementsByTagName("p")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>querySelector()</code></td>
+                                        <td>Selects the first element that matches a CSS selector</td>
+                                        <td>Single element</td>
+                                        <td><code>document.querySelector(".intro")</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>querySelectorAll()</code></td>
+                                        <td>Selects all elements that match a CSS selector</td>
+                                        <td>NodeList (array-like)</td>
+                                        <td><code>document.querySelectorAll("ul li")</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Modifying Elements</h3>
+                        <p>Once you've selected an element, you can modify its content, attributes, and styles:</p>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="code-block">
+                                    <span class="comment">// Changing content</span>
+                                    <span class="keyword">let</span> <span class="variable">heading</span> = <span
+                                        class="keyword">document</span>.<span
+                                        class="function">getElementById</span>(<span
+                                        class="string">"main-heading"</span>);
+                                    <span class="variable">heading</span>.<span class="keyword">innerHTML</span> = <span
+                                        class="string">"New Heading Text"</span>;
+
+                                    <br>
+                                    <span class="comment">// Changing attributes</span>
+                                    <span class="keyword">let</span> <span class="variable">link</span> = <span
+                                        class="keyword">document</span>.<span
+                                        class="function">querySelector</span>(<span class="string">"a"</span>);
+                                    <span class="variable">link</span>.<span class="keyword">href</span> = <span
+                                        class="string">"https://example.com"</span>;
+                                    <span class="variable">link</span>.<span class="keyword">target</span> = <span
+                                        class="string">"_blank"</span>;
+
+                                    <br>
+                                    <span class="comment">// Changing styles</span>
+                                    <span class="keyword">let</span> <span class="variable">paragraph</span> = <span
+                                        class="keyword">document</span>.<span
+                                        class="function">querySelector</span>(<span class="string">"p"</span>);
+                                    <span class="variable">paragraph</span>.<span class="keyword">style</span>.<span
+                                        class="variable">color</span> = <span class="string">"blue"</span>;
+                                    <span class="variable">paragraph</span>.<span class="keyword">style</span>.<span
+                                        class="variable">fontSize</span> = <span class="string">"18px"</span>;
+                                    <span class="variable">paragraph</span>.<span class="keyword">style</span>.<span
+                                        class="variable">backgroundColor</span> = <span class="string">"#f0f0f0"</span>;
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Common Element Properties</h5>
+                                        <ul>
+                                            <li><code>innerHTML</code> - HTML content inside the element</li>
+                                            <li><code>textContent</code> - Text content without HTML</li>
+                                            <li><code>value</code> - Value of form elements</li>
+                                            <li><code>src</code> - Source URL for images</li>
+                                            <li><code>href</code> - URL for links</li>
+                                            <li><code>style</code> - Access to inline styles</li>
+                                            <li><code>className</code> - CSS class(es) of the element</li>
+                                            <li><code>id</code> - ID of the element</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- DOM Manipulation Demo -->
+                        <div class="demo-section">
+                            <h3 class="mb-3">DOM Manipulation Demo</h3>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div id="demo-element" class="p-4 border rounded text-center">
+                                        <h4 id="demo-heading">Original Heading</h4>
+                                        <p id="demo-paragraph">This is a paragraph that we'll modify with JavaScript.
+                                        </p>
+                                        <button id="demo-button" class="btn btn-primary">Click Me</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="list-group">
+                                        <button type="button" class="list-group-item list-group-item-action"
+                                            onclick="changeHeading()">Change the heading text</button>
+                                        <button type="button" class="list-group-item list-group-item-action"
+                                            onclick="changeParagraphColor()">Change paragraph color</button>
+                                        <button type="button" class="list-group-item list-group-item-action"
+                                            onclick="changeButtonText()">Change button text</button>
+                                        <button type="button" class="list-group-item list-group-item-action"
+                                            onclick="addBorder()">Add a colored border</button>
+                                        <button type="button" class="list-group-item list-group-item-action"
+                                            onclick="resetDemo()">Reset all changes</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <span class="comment">// The JavaScript code for the demo actions</span>
+                                <span class="keyword">function</span> <span class="function">changeHeading</span>() {
+                                <span class="keyword">let</span> <span class="variable">heading</span> = <span
+                                    class="keyword">document</span>.<span class="function">getElementById</span>(<span
+                                    class="string">"demo-heading"</span>);
+                                <span class="variable">heading</span>.<span class="keyword">innerHTML</span> = <span
+                                    class="string">"Updated Heading!"</span>;
+                                }
+
+                                <span class="keyword">function</span> <span
+                                    class="function">changeParagraphColor</span>() {
+                                <span class="keyword">let</span> <span class="variable">paragraph</span> = <span
+                                    class="keyword">document</span>.<span class="function">getElementById</span>(<span
+                                    class="string">"demo-paragraph"</span>);
+                                <span class="variable">paragraph</span>.<span class="keyword">style</span>.<span
+                                    class="variable">color</span> = <span class="string">"red"</span>;
+                                }
+
+                                <span class="comment">// More functions shown in the actual JavaScript file</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Practice Exercises section -->
+                    <section id="practice-exercises" class="mb-5">
+                        <h2>Practice Exercises</h2>
+                        <p class="lead">Let's practice what we've learned with some hands-on exercises.</p>
+
+                        <!-- Exercise 1 -->
+                        <div class="practice-container">
+                            <h3>Exercise 1: Variables and Data Types</h3>
+                            <p>Create variables for different data types and print them to the console.</p>
+
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control syntax-check-input"
+                                            placeholder="Write your code here" id="exercise1-input"
+                                            style="height: 150px"></textarea>
+                                        <label for="exercise1-input">Write your code here</label>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="checkExercise1()">Check Answer</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Exercise Requirements</h5>
+                                            <ul class="mb-0">
+                                                <li>Create a string variable named <code>greeting</code></li>
+                                                <li>Create a number variable named <code>age</code></li>
+                                                <li>Create a boolean variable named <code>isStudent</code></li>
+                                                <li>Print each variable using <code>console.log()</code></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="exercise1-feedback" class="alert" role="alert" style="display: none;"></div>
+                        </div>
+
+                        <!-- Exercise 2 -->
+                        <div class="practice-container">
+                            <h3>Exercise 2: DOM Selection</h3>
+                            <p>Write code to select and modify the paragraph below.</p>
+
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <div id="exercise2-paragraph" class="border p-3 mb-3 rounded">
+                                        This paragraph has an ID of "exercise2-paragraph". Your task is to modify it
+                                        using JavaScript.
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control syntax-check-input"
+                                            placeholder="Write your code here" id="exercise2-input"
+                                            style="height: 150px"></textarea>
+                                        <label for="exercise2-input">Write your code here</label>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="runExercise2()">Run Code</button>
+                                    <button class="btn btn-secondary" onclick="resetExercise2()">Reset</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Exercise Requirements</h5>
+                                            <p>Write code to:</p>
+                                            <ul class="mb-0">
+                                                <li>Select the paragraph using <code>getElementById</code></li>
+                                                <li>Change its text content</li>
+                                                <li>Change its text color</li>
+                                                <li>Add a background color</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="exercise2-feedback" class="alert" role="alert" style="display: none;"></div>
+                        </div>
+
+                        <!-- Exercise 3 -->
+                        <div class="practice-container">
+                            <h3>Exercise 3: Put It All Together</h3>
+                            <p>Create a simple interactive element using what you've learned.</p>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div id="exercise3-container" class="border p-3 rounded">
+                                        <h4 id="exercise3-heading">Hello, World!</h4>
+                                        <p id="exercise3-text">Click the button below to change this text.</p>
+                                        <button id="exercise3-button" class="btn btn-primary">Click Me</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control syntax-check-input"
+                                            placeholder="Write your code here" id="exercise3-input"
+                                            style="height: 220px"></textarea>
+                                        <label for="exercise3-input">Write your JavaScript code here</label>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="runExercise3()">Run Code</button>
+                                    <button class="btn btn-secondary" onclick="resetExercise3()">Reset</button>
+                                </div>
+                            </div>
+
+                            <div id="exercise3-feedback" class="alert" role="alert" style="display: none;"></div>
+                        </div>
+                    </section>
+
+                    <!-- Session Summary -->
+                    <section id="session-summary">
+                        <h2>Session Summary</h2>
+                        <p class="lead">Let's review what we've learned in this session.</p>
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Key Concepts Covered</h5>
+                                <ul class="mb-0">
+                                    <li><strong>JavaScript Basics</strong> - What JavaScript is and how it works with
+                                        HTML and CSS</li>
+                                    <li><strong>The DOM</strong> - Understanding the Document Object Model and how it
+                                        represents webpages</li>
+                                    <li><strong>Variables</strong> - Creating and working with variables using
+                                        <code>let</code> and <code>const</code>
+                                    </li>
+                                    <li><strong>Data Types</strong> - Working with strings, numbers, booleans, arrays,
+                                        and objects</li>
+                                    <li><strong>Browser Console</strong> - Using the console for debugging and
+                                        experimentation</li>
+                                    <li><strong>DOM Selection</strong> - Finding and selecting HTML elements with
+                                        JavaScript</li>
+                                    <li><strong>DOM Manipulation</strong> - Changing element content, attributes, and
+                                        styles</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Next Steps</h3>
+                        <p>In the next session, we'll build on these fundamentals by learning about functions, events,
+                            and more advanced DOM manipulation. We'll also start building our grocery list application.
+                        </p>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Additional Resources</h5>
+                                        <ul class="mb-0">
+                                            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+                                                    target="_blank">MDN JavaScript Guide</a></li>
+                                            <li><a href="https://www.w3schools.com/js/" target="_blank">W3Schools
+                                                    JavaScript Tutorial</a></li>
+                                            <li><a href="https://javascript.info/" target="_blank">JavaScript.info</a>
+                                            </li>
+                                            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction"
+                                                    target="_blank">Introduction to the DOM</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Practice Challenges</h5>
+                                        <p>Try these challenges to reinforce your learning:</p>
+                                        <ol class="mb-0">
+                                            <li>Create a page with 3 buttons that change the background color of the
+                                                page</li>
+                                            <li>Build a simple form and use JavaScript to read the input values</li>
+                                            <li>Create a webpage with 5 different elements and use JavaScript to modify
+                                                each one</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4 mb-4">
+                            <a href="session2.html" class="btn btn-primary btn-lg">Continue to Session 2: Functions &
+                                DOM Interaction</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>JavaScript Fundamentals</h4>
+                    <p>Session 1: JavaScript Basics & the DOM</p>
+                    <p><a href="index.html" class="text-white">Back to Course Home</a></p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <nav>
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
+                            <li class="list-inline-item"><a href="session2.html" class="text-white">Next Session</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <p>© BYU IS 120: Introduction to Web Dev</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/session1.js"></script>
+</body>
+
+</html>
