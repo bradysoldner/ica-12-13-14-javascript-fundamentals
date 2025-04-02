@@ -1077,200 +1077,168 @@
 
                         <!-- Exercise 1: Loops -->
                         <div class="practice-container">
-                            <h3>Exercise 1: Loops and DOM Manipulation</h3>
-                            <p>Create a function that generates a table of multiplication values using loops and DOM
-                                manipulation.</p>
-
+                            <h3>Exercise 1: Array forEach Method</h3>
+                            <p>Use the forEach method to display each number in an array and indicate whether it's even or odd.</p>
+                        
                             <div class="row mb-3">
                                 <div class="col-md-8">
                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" placeholder="Write your code here"
-                                            id="exercise1-input" style="height: 240px">// Write a function generateMultiplicationTable(rows, cols) that:
-                    // 1. Creates a multiplication table with the specified number of rows and columns
-                    // 2. Displays the table in the "exercise1-result" div
-                    // 3. Uses a nested loop to generate the table cells
-                    // 4. Highlights cells with even products in a different color
-                    
-                    function generateMultiplicationTable(rows, cols) {
-                      // Your code here
-                    }
-                    
-                    // Call the function with 10 rows and 10 columns
-                    generateMultiplicationTable(10, 10);</textarea>
+                                        <textarea class="form-control" placeholder="Write your code here" id="exercise1-input"
+                                            style="height: 200px">
+// The array of numbers
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];                        
+
+// Write code to:
+// 1. Use forEach to loop through the numbers array
+// 2. Create a list item for each number
+// 3. Add "Even" or "Odd" after each number
+// 4. Add each list item to the "number-list" unordered list                        
+
+function displayNumbers() {
+    // Your code here
+}                        
+
+// Call the function
+displayNumbers();
+                                </textarea>
                                         <label for="exercise1-input">Write your code here</label>
                                     </div>
                                     <button class="btn btn-primary" id="exercise1-run">Run Code</button>
+                                    <button class="btn btn-secondary" id="exercise1-reset">Reset</button>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="card h-100">
+                                    <div class="card mb-3">
                                         <div class="card-body">
-                                            <h5 class="card-title">Instructions</h5>
-                                            <p>Create a function <code>generateMultiplicationTable(rows, cols)</code>
-                                                that:</p>
+                                            <h5 class="card-title">Requirements</h5>
                                             <ul>
-                                                <li>Generates an HTML table showing a multiplication table</li>
-                                                <li>Uses nested loops to create the rows and columns</li>
-                                                <li>Shows row and column headers (1, 2, 3, ...)</li>
-                                                <li>Highlights cells with even product values</li>
-                                                <li>Appends the table to the result div</li>
+                                                <li>Use the <code>forEach</code> method on the numbers array</li>
+                                                <li>Create an <code>&lt;li&gt;</code> element for each number</li>
+                                                <li>For each number, show if it's even or odd</li>
+                                                <li>Add items to the list with id "number-list"</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">Output</div>
+                                        <div class="card-body">
+                                            <ul id="number-list" class="list-group list-group-flush">
+                                                <!-- Numbers will be added here -->
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div id="exercise1-output" class="alert" style="display: none;"></div>
-                            <div id="exercise1-result" class="bg-light p-3 rounded">
-                                <!-- Multiplication table will appear here -->
                             </div>
                         </div>
 
                         <!-- Exercise 2: Objects -->
                         <div class="practice-container mt-4">
                             <h3>Exercise 2: Working with Objects</h3>
-                            <p>Create a Library object with methods to manage a collection of books.</p>
-
+                            <p>Create a simple student object and display its properties.</p>
+                        
                             <div class="row mb-3">
                                 <div class="col-md-8">
                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" placeholder="Write your code here"
-                                            id="exercise2-input" style="height: 300px">// Create a Library object with the following features:
-                    // 1. A books array to store book objects
-                    // 2. An addBook() method to add a new book
-                    // 3. A findBooksByAuthor() method to find all books by a specific author
-                    // 4. A displayAllBooks() method to show all books in the library-display div
-                    
-                    const Library = {
-                      // Your code here
-                    };
-                    
-                    // Initialize with some books
-                    Library.addBook("The Hobbit", "J.R.R. Tolkien", 1937);
-                    Library.addBook("1984", "George Orwell", 1949);
-                    Library.addBook("The Lord of the Rings", "J.R.R. Tolkien", 1954);
-                    
-                    // Display all books
-                    Library.displayAllBooks();</textarea>
+                                        <textarea class="form-control" placeholder="Write your code here" id="exercise2-input"
+                                            style="height: 250px">
+// Create a student object with the following properties:
+// - name (string)
+// - age (number)
+// - grades (array of numbers)
+// - isActive (boolean)      
+
+const student = {
+    // Your code here
+};                        
+
+// Add a method called 'getAverage' to the student object
+// that calculates the average of the grades array                        
+// Write a function to display the student info in the "student-info" div
+function displayStudentInfo() {
+    // Your code here
+}   
+
+// Call the function
+displayStudentInfo();
+                                </textarea>
                                         <label for="exercise2-input">Write your code here</label>
                                     </div>
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary me-2" id="exercise2-run">Run Code</button>
-                                        <button class="btn btn-secondary" id="exercise2-reset">Reset</button>
-                                    </div>
+                                    <button class="btn btn-primary" id="exercise2-run">Run Code</button>
+                                    <button class="btn btn-secondary" id="exercise2-reset">Reset</button>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="card h-100">
+                                    <div class="card mb-3">
                                         <div class="card-body">
                                             <h5 class="card-title">Requirements</h5>
-                                            <p>Create a <code>Library</code> object with:</p>
                                             <ul>
-                                                <li>A <code>books</code> array to store book objects</li>
-                                                <li><code>addBook(title, author, year)</code> method</li>
-                                                <li><code>findBooksByAuthor(author)</code> method that returns an array
-                                                    of matching books
-                                                </li>
-                                                <li><code>displayAllBooks()</code> method that shows all books in the
-                                                    library-display div
-                                                </li>
+                                                <li>Create a student object with name, age, grades, and isActive properties</li>
+                                                <li>Add a getAverage method that returns the average of grades</li>
+                                                <li>Write a function to display all student info</li>
+                                                <li>Display the info in the student-info div</li>
                                             </ul>
                                         </div>
                                     </div>
+                                    <div class="card">
+                                        <div class="card-header">Student Information</div>
+                                        <div class="card-body" id="student-info">
+                                            <!-- Student info will be displayed here -->
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div id="exercise2-output" class="alert" style="display: none;"></div>
-                            <div id="exercise2-test-ui" class="bg-light p-3 rounded mb-3" style="display: none;">
-                                <h5>Test Your Library</h5>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Title:</label>
-                                            <input type="text" id="test-book-title" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Author:</label>
-                                            <input type="text" id="test-book-author" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label class="form-label">Year:</label>
-                                            <input type="number" id="test-book-year" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                                <button id="add-test-book" class="btn btn-primary mb-3">Add Book</button>
-
-                                <div class="row mt-3">
-                                    <div class="col-md-8">
-                                        <div class="mb-3">
-                                            <label class="form-label">Search by Author:</label>
-                                            <div class="input-group">
-                                                <input type="text" id="test-search-author" class="form-control">
-                                                <button id="search-author" class="btn btn-primary">Search</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="search-results" class="mt-3"></div>
-                            </div>
-                            <div id="library-display"></div>
                         </div>
 
                         <!-- Exercise 3: DOM & Events -->
                         <div class="practice-container mt-4">
-                            <h3>Exercise 3: DOM and Event Handling</h3>
-                            <p>Create a simple task manager with event delegation for dynamic elements.</p>
-
+                            <h3>Exercise 3: Working with classList</h3>
+                            <p>Create buttons that use classList to modify a box's appearance.</p>
+                        
                             <div class="row mb-3">
                                 <div class="col-md-8">
                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" placeholder="Write your code here"
-                                            id="exercise3-input" style="height: 300px">// Create a function that sets up a task manager with:
-                                        // 1. A form for adding new tasks (input field and button)
-                                        // 2. A list to display tasks with delete buttons
-                                        // 3. Use event delegation to handle task deletion
-                                        // 4. Use classList to style completed tasks
-                                        // 5. Persist tasks in the DOM until explicitly removed
-                                        
-                                        function createTaskManager() {
-                                          // Your code here - set up the form, list, and event handlers
-                                          // All elements should be created and added to task-manager-container
-                                        }
-                                        
-                                        // Initialize the task manager
-                                        // createTaskManager(); // Uncomment this when ready to test</textarea>
+                                        <textarea class="form-control" placeholder="Write your code here" id="exercise3-input"
+                                            style="height: 250px">
+// Write code to:
+// 1. Get the element with id "style-box"
+// 2. Add event listeners to each button that will:
+//    - "Add Color" button: Add the "bg-primary" class to the box
+//    - "Add Border" button: Add the "border border-dark" class to the box
+//    - "Make Large" button: Add the "p-5" class to the box
+//    - "Reset" button: Remove all added classes from the box
+
+function setupButtons() {
+    // Your code here
+}
+
+// Call the function
+setupButtons();
+                                </textarea>
                                         <label for="exercise3-input">Write your code here</label>
                                     </div>
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary me-2" id="exercise3-run">Run Code</button>
-                                        <button class="btn btn-secondary" id="exercise3-reset">Reset</button>
-                                    </div>
+                                    <button class="btn btn-primary" id="exercise3-run">Run Code</button>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="card h-100">
+                                    <div class="card mb-3">
                                         <div class="card-body">
                                             <h5 class="card-title">Requirements</h5>
-                                            <p>Create a function <code>createTaskManager()</code> that:</p>
                                             <ul>
-                                                <li>Creates an input field with ID <code>task-input</code></li>
-                                                <li>Creates an add button with ID <code>add-task-button</code></li>
-                                                <li>Creates a task list with ID <code>tasks-list</code></li>
-                                                <li>Adds all elements to <code>task-manager-container</code></li>
-                                                <li>Implements adding new tasks when the button is clicked</li>
-                                                <li>Uses event delegation for task deletion</li>
-                                                <li>Allows tasks to be marked as completed by clicking on them</li>
+                                                <li>Use <code>classList.add()</code> to add classes</li>
+                                                <li>Use <code>classList.remove()</code> to remove classes</li>
+                                                <li>Update the box according to which button is clicked</li>
                                             </ul>
                                         </div>
                                     </div>
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <div id="style-box" class="mb-3 p-3 d-inline-block">Style Me!</div>
+                                            <div class="d-grid gap-2">
+                                                <button id="add-color" class="btn btn-primary btn-sm">Add Color</button>
+                                                <button id="add-border" class="btn btn-secondary btn-sm">Add Border</button>
+                                                <button id="make-large" class="btn btn-warning btn-sm">Make Large</button>
+                                                <button id="reset-box" class="btn btn-danger btn-sm">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div id="exercise3-output" class="alert" style="display: none;"></div>
-                            <div id="task-manager-container" class="bg-light p-3 rounded">
-                                <!-- Task manager will be created here -->
                             </div>
                         </div>
                     </section>

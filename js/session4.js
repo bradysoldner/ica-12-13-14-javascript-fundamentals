@@ -402,212 +402,130 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	// Practice Exercise 1: Loops
-	const exercise1RunButton = document.getElementById("exercise1-run");
-	if (exercise1RunButton) {
-		exercise1RunButton.addEventListener("click", function () {
+	document
+		.getElementById("exercise1-run")
+		.addEventListener("click", function () {
 			const code = document.getElementById("exercise1-input").value;
-			const outputDiv = document.getElementById("exercise1-output");
+			const numberList = document.getElementById("number-list");
+
+			// Clear the list first
+			numberList.innerHTML = "";
 
 			try {
-				// Evaluate the user's code
-				eval(`
-                    // Reset output
-                    const resultDiv = document.getElementById("exercise1-result");
-                    resultDiv.innerHTML = "";
-                    
-                    // Run the user's code
-                    ${code}
-                `);
+				// Execute the code
+				eval(code);
 
-				// Check if the output div contains results
-				const resultDiv = document.getElementById("exercise1-result");
-				if (resultDiv.querySelector("table")) {
-					outputDiv.className = "alert alert-success";
-					outputDiv.innerHTML =
-						"<strong>Great job!</strong> Your multiplication table works correctly.";
+				// Check if the list has been populated
+				if (numberList.children.length > 0) {
+					// Success, no need for explicit message
 				} else {
-					outputDiv.className = "alert alert-warning";
-					outputDiv.innerHTML =
-						"<strong>Almost there!</strong> Make sure your code generates a table and displays it in the result div.";
+					// Add a message if the list is empty
+					const errorMsg = document.createElement("li");
+					errorMsg.className = "list-group-item text-danger";
+					errorMsg.textContent =
+						"No items were added to the list. Check your code.";
+					numberList.appendChild(errorMsg);
 				}
 			} catch (error) {
-				outputDiv.className = "alert alert-danger";
-				outputDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+				const errorMsg = document.createElement("li");
+				errorMsg.className = "list-group-item text-danger";
+				errorMsg.textContent = "Error: " + error.message;
+				numberList.appendChild(errorMsg);
 			}
-
-			outputDiv.style.display = "block";
 		});
-	}
+
+	document
+		.getElementById("exercise1-reset")
+		.addEventListener("click", function () {
+			document.getElementById("number-list").innerHTML = "";
+		});
 
 	// Practice Exercise 2: Objects
-	const exercise2RunButton = document.getElementById("exercise2-run");
-	const exercise2ResetButton = document.getElementById("exercise2-reset");
-	if (exercise2RunButton && exercise2ResetButton) {
-		exercise2RunButton.addEventListener("click", function () {
+	document
+		.getElementById("exercise2-run")
+		.addEventListener("click", function () {
 			const code = document.getElementById("exercise2-input").value;
-			const outputDiv = document.getElementById("exercise2-output");
+			const studentInfo = document.getElementById("student-info");
+
+			// Clear the info div first
+			studentInfo.innerHTML = "";
 
 			try {
-				// Evaluate the user's code
+				// Execute the code
 				eval(code);
 
-				// Check if the required library object exists
-				if (typeof Library === "object") {
-					let success = true;
-					let message = "";
+				// Check if the student object has all required properties
+				if (typeof student !== "object") {
+					throw new Error("Student object not found or not defined correctly");
+				}
 
-					// Test required methods
-					if (typeof Library.addBook !== "function") {
-						success = false;
-						message += "Missing addBook method.<br>";
-					}
-
-					if (typeof Library.findBooksByAuthor !== "function") {
-						success = false;
-						message += "Missing findBooksByAuthor method.<br>";
-					}
-
-					if (typeof Library.displayAllBooks !== "function") {
-						success = false;
-						message += "Missing displayAllBooks method.<br>";
-					}
-
-					if (!Array.isArray(Library.books)) {
-						success = false;
-						message += "Missing books array.<br>";
-					}
-
-					if (success) {
-						// Display the user's library implementation
-						outputDiv.className = "alert alert-success";
-						outputDiv.innerHTML =
-							"<strong>Great job!</strong> Your Library implementation works correctly. Test it with the buttons below.";
-
-						// Show test UI
-						document.getElementById("exercise2-test-ui").style.display =
-							"block";
-
-						// Set up test handlers
-						document
-							.getElementById("add-test-book")
-							.addEventListener("click", function () {
-								const title = document.getElementById("test-book-title").value;
-								const author =
-									document.getElementById("test-book-author").value;
-								const year = parseInt(
-									document.getElementById("test-book-year").value
-								);
-
-								if (title && author && year) {
-									Library.addBook(title, author, year);
-									document.getElementById("test-book-title").value = "";
-									document.getElementById("test-book-author").value = "";
-									document.getElementById("test-book-year").value = "";
-
-									// Update display
-									Library.displayAllBooks();
-								}
-							});
-
-						document
-							.getElementById("search-author")
-							.addEventListener("click", function () {
-								const author =
-									document.getElementById("test-search-author").value;
-								const books = Library.findBooksByAuthor(author);
-
-								const resultsDiv = document.getElementById("search-results");
-								if (books.length > 0) {
-									let html = "<h6>Found Books:</h6><ul>";
-									books.forEach((book) => {
-										html += `<li>${book.title} (${book.year})</li>`;
-									});
-									html += "</ul>";
-									resultsDiv.innerHTML = html;
-								} else {
-									resultsDiv.innerHTML = `<p class="text-muted">No books found by author: ${author}</p>`;
-								}
-							});
-					} else {
-						outputDiv.className = "alert alert-warning";
-						outputDiv.innerHTML = `
-                            <strong>Almost there!</strong> Your Library object needs some work:<br>
-                            ${message}
-                        `;
-					}
-				} else {
-					outputDiv.className = "alert alert-warning";
-					outputDiv.innerHTML =
-						"<strong>Check your code!</strong> Make sure you've created a Library object.";
+				if (
+					!student.name ||
+					!student.age ||
+					!Array.isArray(student.grades) ||
+					typeof student.isActive !== "boolean"
+				) {
+					studentInfo.innerHTML = `
+        <div class="alert alert-warning">
+          <strong>Almost there!</strong> Make sure your student object has all required properties.
+        </div>
+      `;
+				} else if (typeof student.getAverage !== "function") {
+					studentInfo.innerHTML = `
+        <div class="alert alert-warning">
+          <strong>Don't forget!</strong> Add the getAverage method to your student object.
+        </div>
+      `;
+				} else if (studentInfo.children.length === 0) {
+					studentInfo.innerHTML = `
+        <div class="alert alert-warning">
+          <strong>One more step!</strong> Make sure to call displayStudentInfo() to show the student information.
+        </div>
+      `;
 				}
 			} catch (error) {
-				outputDiv.className = "alert alert-danger";
-				outputDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+				studentInfo.innerHTML = `
+      <div class="alert alert-danger">
+        <strong>Error:</strong> ${error.message}
+      </div>
+    `;
 			}
-
-			outputDiv.style.display = "block";
 		});
 
-		exercise2ResetButton.addEventListener("click", function () {
-			document.getElementById("exercise2-output").style.display = "none";
-			document.getElementById("exercise2-test-ui").style.display = "none";
-			document.getElementById("library-display").innerHTML = "";
-			document.getElementById("search-results").innerHTML = "";
+	document
+		.getElementById("exercise2-reset")
+		.addEventListener("click", function () {
+			document.getElementById("student-info").innerHTML = "";
 		});
-	}
 
 	// Practice Exercise 3: DOM & Events
-	const exercise3RunButton = document.getElementById("exercise3-run");
-	const exercise3ResetButton = document.getElementById("exercise3-reset");
-	if (exercise3RunButton && exercise3ResetButton) {
-		exercise3RunButton.addEventListener("click", function () {
+	document
+		.getElementById("exercise3-run")
+		.addEventListener("click", function () {
 			const code = document.getElementById("exercise3-input").value;
-			const outputDiv = document.getElementById("exercise3-output");
+
+			// Reset box first
+			const styleBox = document.getElementById("style-box");
+			styleBox.className = "mb-3 p-3 d-inline-block";
+
+			// Remove any previously added event listeners by cloning and replacing
+			const buttons = ["add-color", "add-border", "make-large", "reset-box"];
+			buttons.forEach((id) => {
+				const oldButton = document.getElementById(id);
+				const newButton = oldButton.cloneNode(true);
+				oldButton.parentNode.replaceChild(newButton, oldButton);
+			});
 
 			try {
-				// Reset the task manager container
-				document.getElementById("task-manager-container").innerHTML = "";
-
-				// Evaluate the user's code
+				// Execute the code
 				eval(code);
 
-				// Check if the function exists
-				if (typeof createTaskManager === "function") {
-					// Call the function to initialize the task manager
-					createTaskManager();
-
-					// Check if the task manager UI has been created
-					const taskInput = document.getElementById("task-input");
-					const addTaskButton = document.getElementById("add-task-button");
-					const taskList = document.getElementById("tasks-list");
-
-					if (taskInput && addTaskButton && taskList) {
-						outputDiv.className = "alert alert-success";
-						outputDiv.innerHTML =
-							"<strong>Great job!</strong> Your task manager is set up correctly. Try adding and removing tasks.";
-					} else {
-						outputDiv.className = "alert alert-warning";
-						outputDiv.innerHTML =
-							"<strong>Almost there!</strong> Make sure your task manager creates all the required elements.";
-					}
-				} else {
-					outputDiv.className = "alert alert-warning";
-					outputDiv.innerHTML =
-						"<strong>Check your code!</strong> Make sure you've created a function named 'createTaskManager'.";
-				}
+				// No automatic validation - users will see if their code works
+				// when they click the buttons
 			} catch (error) {
-				outputDiv.className = "alert alert-danger";
-				outputDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+				alert("Error: " + error.message);
 			}
-
-			outputDiv.style.display = "block";
 		});
-
-		exercise3ResetButton.addEventListener("click", function () {
-			document.getElementById("exercise3-output").style.display = "none";
-			document.getElementById("task-manager-container").innerHTML = "";
-		});
-	}
 
 	// Format code blocks to prevent line wrapping
 	document.querySelectorAll(".code-block").forEach((block) => {
