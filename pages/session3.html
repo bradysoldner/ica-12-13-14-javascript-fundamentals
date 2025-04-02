@@ -749,147 +749,134 @@
                         <!-- Exercise 1: Conditionals -->
                         <div class="practice-container">
                             <h3>Exercise 1: Conditional Statements</h3>
-                            <p>Write a function to determine the ticket price based on age and membership status.</p>
-                    
+                            <p>Write a function to determine if a number is positive, negative, or zero.</p>
+                        
                             <div class="row mb-3">
                                 <div class="col-md-8">
                                     <div class="form-floating mb-3">
                                         <textarea class="form-control" placeholder="Write your code here" id="exercise1-input"
-                                            style="height: 200px"></textarea>
+                                            style="height: 150px">
+                        function checkNumber(num) {
+                          // Your code here
+                          // Return "positive" if num is greater than 0
+                          // Return "negative" if num is less than 0
+                          // Return "zero" if num is equal to 0
+                        }
+                                </textarea>
                                         <label for="exercise1-input">Write your code here</label>
                                     </div>
-                                    <button class="btn btn-primary" id="exercise1-run">Check Answer</button>
+                                    <div class="input-group mb-3">
+                                        <input type="number" id="number-to-check" class="form-control" value="0">
+                                        <button class="btn btn-primary" id="exercise1-run">Check Number</button>
+                                    </div>
+                                    <div id="exercise1-result" class="alert"></div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <h5 class="card-title">Requirements</h5>
-                                            <p>Write a function called <code>calculateTicketPrice</code> that takes two parameters:</p>
+                                            <p>Create a function called <code>checkNumber</code> that:</p>
                                             <ul class="mb-0">
-                                                <li><code>age</code> (number)</li>
-                                                <li><code>isMember</code> (boolean)</li>
-                                            </ul>
-                                            <hr>
-                                            <p>Ticket pricing rules:</p>
-                                            <ul class="mb-0">
-                                                <li>Base price: $10</li>
-                                                <li>Children (under 12): 50% off</li>
-                                                <li>Seniors (65+): 30% off</li>
-                                                <li>Members get an additional 20% off</li>
+                                                <li>Takes a number as parameter</li>
+                                                <li>Returns "positive" if number is greater than 0</li>
+                                                <li>Returns "negative" if number is less than 0</li>
+                                                <li>Returns "zero" if number is equal to 0</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                    
-                            <div id="exercise1-output" class="alert" style="display: none;"></div>
                         </div>
                     
                         <!-- Exercise 2: Arrays -->
                         <div class="practice-container">
                             <h3>Exercise 2: Working with Arrays</h3>
-                            <p>Create a shopping cart manager that calculates totals and applies discounts.</p>
-                    
+                            <p>Write a function that finds the largest number in an array.</p>
+                        
                             <div class="row mb-3">
                                 <div class="col-md-8">
                                     <div class="form-floating mb-3">
                                         <textarea class="form-control" placeholder="Write your code here" id="exercise2-input"
-                                            style="height: 250px"></textarea>
+                                            style="height: 150px">
+                        function findLargestNumber(numbers) {
+                          // Your code here
+                          // Return the largest number in the array
+                        }
+                                </textarea>
                                         <label for="exercise2-input">Write your code here</label>
                                     </div>
                                     <div class="mb-3">
-                                        <button class="btn btn-primary me-2" id="exercise2-run">Run Code</button>
-                                        <button class="btn btn-secondary" id="exercise2-reset">Reset</button>
+                                        <label class="form-label">Test with this array:</label>
+                                        <input type="text" id="test-array" class="form-control" value="5, 10, 3, 8, 15, 7">
                                     </div>
+                                    <button class="btn btn-primary" id="exercise2-run">Test Function</button>
+                                    <div id="exercise2-result" class="alert mt-3" style="display: none;"></div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <h5 class="card-title">Requirements</h5>
-                                            <p>Create a <code>ShoppingCart</code> object with the following:</p>
-                                            <ul>
-                                                <li>An <code>items</code> array to store products</li>
-                                                <li><code>addItem(name, price, quantity)</code> method to add a product</li>
-                                                <li><code>removeItem(index)</code> method to remove a product</li>
-                                                <li><code>calculateTotal()</code> method to calculate the total price</li>
-                                                <li><code>applyDiscount(percent)</code> method to apply a discount</li>
+                                            <p>Create a function called <code>findLargestNumber</code> that:</p>
+                                            <ul class="mb-0">
+                                                <li>Takes an array of numbers as parameter</li>
+                                                <li>Returns the largest number in the array</li>
+                                                <li>Handle empty arrays (return null or undefined)</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                    
-                            <div id="exercise2-output" class="alert" style="display: none;"></div>
-                            <div id="cart-display" class="bg-light p-3 rounded" style="display: none;">
-                                <h4>Shopping Cart Contents</h4>
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Item</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="cart-items">
-                                        <!-- Cart items will appear here -->
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="3" class="text-end"><strong>Grand Total:</strong></td>
-                                            <td id="cart-total"></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
                             </div>
                         </div>
                     
                         <!-- Exercise 3: DOM Manipulation -->
                         <div class="practice-container">
                             <h3>Exercise 3: DOM Manipulation</h3>
-                            <p>Create a color palette generator that adds color swatches to the page.</p>
-                    
+                            <p>Write code to create a list of colors from an array.</p>
+                        
                             <div class="row mb-3">
                                 <div class="col-md-8">
                                     <div class="form-floating mb-3">
                                         <textarea class="form-control" placeholder="Write your code here" id="exercise3-input"
-                                            style="height: 200px"></textarea>
+                                            style="height: 200px">
+                        // Sample array of colors
+                        const colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
+                        
+                        // Write your code to:
+                        // 1. Loop through the colors array
+                        // 2. Create a list item for each color
+                        // 3. Add each list item to the "color-list" unordered list
+                        
+                        function displayColors() {
+                          // Your code here
+                        }
+                        
+                        // Call the function
+                        displayColors();
+                                </textarea>
                                         <label for="exercise3-input">Write your code here</label>
                                     </div>
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary me-2" id="exercise3-run">Run Code</button>
-                                        <button class="btn btn-secondary" id="exercise3-reset">Reset</button>
-                                    </div>
+                                    <button class="btn btn-primary" id="exercise3-run">Run Code</button>
+                                    <button class="btn btn-secondary" id="exercise3-reset">Reset</button>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="card h-100">
+                                    <div class="card mb-3">
                                         <div class="card-body">
                                             <h5 class="card-title">Requirements</h5>
-                                            <p>Write a function called <code>generateColorPalette</code> that:</p>
                                             <ul>
-                                                <li>Takes a base color in hex format (e.g. "#3498db")</li>
-                                                <li>Generates 5 variations of the color (lighter and darker)</li>
-                                                <li>Creates a color swatch for each variation</li>
-                                                <li>Adds all swatches to the <code>color-palette</code> div</li>
-                                                <li>Shows the hex code for each color</li>
+                                                <li>Create a function called <code>displayColors</code></li>
+                                                <li>Loop through the colors array</li>
+                                                <li>Create an <code>&lt;li&gt;</code> element for each color</li>
+                                                <li>Add each <code>&lt;li&gt;</code> to the unordered list with id "color-list"</li>
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                    
-                            <div id="exercise3-output" class="alert" style="display: none;"></div>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div id="color-palette" class="d-flex flex-wrap justify-content-center">
-                                        <!-- Color swatches will appear here -->
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="base-color">Base Color:</label>
-                                        <input type="color" class="form-control form-control-color" id="base-color" value="#3498db"
-                                            title="Choose a color">
+                                    <div class="card">
+                                        <div class="card-header">Output</div>
+                                        <div class="card-body">
+                                            <ul id="color-list" class="list-group list-group-flush">
+                                                <!-- Colors will be added here -->
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

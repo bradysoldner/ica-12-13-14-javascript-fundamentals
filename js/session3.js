@@ -457,245 +457,128 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	// Practice Exercise 1: Conditionals
-	const exercise1RunButton = document.getElementById("exercise1-run");
-	if (exercise1RunButton) {
-		exercise1RunButton.addEventListener("click", function () {
+	document
+		.getElementById("exercise1-run")
+		.addEventListener("click", function () {
 			const code = document.getElementById("exercise1-input").value;
-			const outputDiv = document.getElementById("exercise1-output");
+			const numToCheck = Number(
+				document.getElementById("number-to-check").value
+			);
+			const resultDiv = document.getElementById("exercise1-result");
 
 			try {
-				// Evaluate the user's code
-				const userFunction = new Function("return " + code)();
+				// Extract and run the function
+				const functionBody = code.substring(
+					code.indexOf("{") + 1,
+					code.lastIndexOf("}")
+				);
+				const checkNumber = new Function("num", functionBody);
 
-				// Check if the user code contains a function named calculateTicketPrice
-				if (
-					typeof userFunction === "function" &&
-					userFunction.name === "calculateTicketPrice"
-				) {
-					// Test the function with various test cases
-					const testCases = [
-						{ age: 10, isMember: false, expected: 5.0 }, // Child, non-member
-						{ age: 10, isMember: true, expected: 4.0 }, // Child, member
-						{ age: 35, isMember: false, expected: 10.0 }, // Adult, non-member
-						{ age: 35, isMember: true, expected: 8.0 }, // Adult, member
-						{ age: 70, isMember: false, expected: 7.0 }, // Senior, non-member
-						{ age: 70, isMember: true, expected: 5.6 }, // Senior, member
-					];
+				// Test the function
+				const result = checkNumber(numToCheck);
 
-					let allTestsPassed = true;
-					let testResults = "<h5>Test Results:</h5><ul>";
+				// Check result
+				let isCorrect = false;
+				if (numToCheck > 0 && result === "positive") isCorrect = true;
+				if (numToCheck < 0 && result === "negative") isCorrect = true;
+				if (numToCheck === 0 && result === "zero") isCorrect = true;
 
-					testCases.forEach((test, index) => {
-						const result = userFunction(test.age, test.isMember);
-						const roundedResult = parseFloat(result.toFixed(2));
-						const passed = roundedResult === test.expected;
-
-						if (!passed) allTestsPassed = false;
-
-						testResults += `<li>Test ${index + 1}: Age ${test.age}, Member: ${
-							test.isMember ? "Yes" : "No"
-						} - Expected: $${test.expected.toFixed(
-							2
-						)}, Got: $${roundedResult.toFixed(2)} - ${
-							passed
-								? '<span class="text-success">PASS</span>'
-								: '<span class="text-danger">FAIL</span>'
-						}</li>`;
-					});
-
-					testResults += "</ul>";
-
-					if (allTestsPassed) {
-						outputDiv.className = "alert alert-success";
-						outputDiv.innerHTML = `<strong>Great job!</strong> All tests passed. Your function works correctly.${testResults}`;
-					} else {
-						outputDiv.className = "alert alert-warning";
-						outputDiv.innerHTML = `<strong>Almost there!</strong> Some tests failed. Check the implementation details.${testResults}`;
-					}
+				if (isCorrect) {
+					resultDiv.className = "alert alert-success";
+					resultDiv.innerHTML = `<strong>Correct!</strong> ${numToCheck} is ${result}.`;
 				} else {
-					outputDiv.className = "alert alert-warning";
-					outputDiv.innerHTML =
-						"<strong>Check your code!</strong> Make sure you've created a function named 'calculateTicketPrice' that takes 'age' and 'isMember' parameters.";
+					resultDiv.className = "alert alert-warning";
+					resultDiv.innerHTML = `<strong>Try again!</strong> Your function returned "${result}" for ${numToCheck}.`;
 				}
 			} catch (error) {
-				outputDiv.className = "alert alert-danger";
-				outputDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+				resultDiv.className = "alert alert-danger";
+				resultDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
 			}
-
-			outputDiv.style.display = "block";
 		});
-	}
 
 	// Practice Exercise 2: Arrays
-	const exercise2RunButton = document.getElementById("exercise2-run");
-	const exercise2ResetButton = document.getElementById("exercise2-reset");
-
-	if (exercise2RunButton) {
-		exercise2RunButton.addEventListener("click", function () {
+	// Exercise 2 functionality
+	document
+		.getElementById("exercise2-run")
+		.addEventListener("click", function () {
 			const code = document.getElementById("exercise2-input").value;
-			const outputDiv = document.getElementById("exercise2-output");
-			const cartDisplay = document.getElementById("cart-display");
-			const cartItems = document.getElementById("cart-items");
-			const cartTotal = document.getElementById("cart-total");
+			const testArrayStr = document.getElementById("test-array").value;
+			const resultDiv = document.getElementById("exercise2-result");
 
 			try {
-				// Execute the user's code
-				eval(code);
+				// Parse the input array
+				const testArray = testArrayStr
+					.split(",")
+					.map((num) => Number(num.trim()));
 
-				// Check if ShoppingCart object exists
-				if (typeof ShoppingCart === "object") {
-					let success = true;
-					let message = "";
+				// Extract and run the function
+				const functionBody = code.substring(
+					code.indexOf("{") + 1,
+					code.lastIndexOf("}")
+				);
+				const findLargestNumber = new Function("numbers", functionBody);
 
-					// Test required methods
-					if (typeof ShoppingCart.addItem !== "function") {
-						success = false;
-						message += "Missing addItem method.<br>";
-					}
+				// Get the expected result
+				const expectedResult = Math.max(...testArray);
 
-					if (typeof ShoppingCart.removeItem !== "function") {
-						success = false;
-						message += "Missing removeItem method.<br>";
-					}
+				// Test the function
+				const result = findLargestNumber(testArray);
 
-					if (typeof ShoppingCart.calculateTotal !== "function") {
-						success = false;
-						message += "Missing calculateTotal method.<br>";
-					}
-
-					if (typeof ShoppingCart.applyDiscount !== "function") {
-						success = false;
-						message += "Missing applyDiscount method.<br>";
-					}
-
-					if (!Array.isArray(ShoppingCart.items)) {
-						success = false;
-						message += "Missing items array.<br>";
-					}
-
-					if (success) {
-						// Test the ShoppingCart functionality
-						ShoppingCart.items = []; // Reset
-						ShoppingCart.addItem("Laptop", 999.99, 1);
-						ShoppingCart.addItem("Mouse", 24.99, 2);
-						ShoppingCart.addItem("Keyboard", 49.99, 1);
-
-						// Display the cart contents
-						cartItems.innerHTML = "";
-						ShoppingCart.items.forEach((item, index) => {
-							const tr = document.createElement("tr");
-							tr.innerHTML = `
-								<td>${item.name}</td>
-								<td>$${item.price.toFixed(2)}</td>
-								<td>${item.quantity}</td>
-								<td>$${(item.price * item.quantity).toFixed(2)}</td>
-							`;
-							cartItems.appendChild(tr);
-						});
-
-						// Display the total
-						cartTotal.textContent = `$${ShoppingCart.calculateTotal().toFixed(
-							2
-						)}`;
-						cartDisplay.style.display = "block";
-
-						// Apply a 10% discount
-						ShoppingCart.applyDiscount(10);
-
-						outputDiv.className = "alert alert-success";
-						outputDiv.innerHTML = `
-							<strong>Great job!</strong> Your shopping cart is working correctly.<br>
-							Original total: $1099.97<br>
-							After 10% discount: $${ShoppingCart.calculateTotal().toFixed(2)}
-						`;
-					} else {
-						outputDiv.className = "alert alert-warning";
-						outputDiv.innerHTML = `
-							<strong>Almost there!</strong> Your ShoppingCart object needs some work:<br>
-							${message}
-						`;
-					}
+				if (result === expectedResult) {
+					resultDiv.className = "alert alert-success";
+					resultDiv.innerHTML = `<strong>Correct!</strong> The largest number is ${result}.`;
 				} else {
-					outputDiv.className = "alert alert-warning";
-					outputDiv.innerHTML =
-						"<strong>Check your code!</strong> Make sure you've created a ShoppingCart object.";
+					resultDiv.className = "alert alert-warning";
+					resultDiv.innerHTML = `<strong>Try again!</strong> Your function returned ${result}, but the largest number is ${expectedResult}.`;
 				}
+
+				resultDiv.style.display = "block";
 			} catch (error) {
-				outputDiv.className = "alert alert-danger";
-				outputDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+				resultDiv.className = "alert alert-danger";
+				resultDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+				resultDiv.style.display = "block";
 			}
-
-			outputDiv.style.display = "block";
 		});
-	}
-
-	if (exercise2ResetButton) {
-		exercise2ResetButton.addEventListener("click", function () {
-			document.getElementById("exercise2-output").style.display = "none";
-			document.getElementById("cart-display").style.display = "none";
-		});
-	}
 
 	// Practice Exercise 3: DOM Manipulation
-	const exercise3RunButton = document.getElementById("exercise3-run");
-	const exercise3ResetButton = document.getElementById("exercise3-reset");
-	const colorPalette = document.getElementById("color-palette");
-	const baseColor = document.getElementById("base-color");
-
-	if (exercise3RunButton && colorPalette) {
-		exercise3RunButton.addEventListener("click", function () {
+	// Exercise 3 functionality
+	document
+		.getElementById("exercise3-run")
+		.addEventListener("click", function () {
 			const code = document.getElementById("exercise3-input").value;
-			const outputDiv = document.getElementById("exercise3-output");
+			const colorList = document.getElementById("color-list");
+
+			// Clear the list first
+			colorList.innerHTML = "";
 
 			try {
-				// Execute the user's code
+				// Execute the code
 				eval(code);
 
-				// Check if the function exists
-				if (typeof generateColorPalette === "function") {
-					// Clear previous palette
-					colorPalette.innerHTML = "";
-
-					// Call the function with the current base color
-					generateColorPalette(baseColor.value);
-
-					// Check if swatches were created
-					if (colorPalette.children.length > 0) {
-						outputDiv.className = "alert alert-success";
-						outputDiv.innerHTML =
-							"<strong>Great job!</strong> Your color palette generator is working.";
-					} else {
-						outputDiv.className = "alert alert-warning";
-						outputDiv.innerHTML =
-							"<strong>Almost there!</strong> Your function ran but didn't create any color swatches.";
-					}
+				// Check if the list has been populated
+				if (colorList.children.length > 0) {
+					// Success, no need for explicit message
 				} else {
-					outputDiv.className = "alert alert-warning";
-					outputDiv.innerHTML =
-						"<strong>Check your code!</strong> Make sure you've created a function named 'generateColorPalette'.";
+					// Add a message if the list is empty
+					const errorMsg = document.createElement("li");
+					errorMsg.className = "list-group-item text-danger";
+					errorMsg.textContent =
+						"No colors were added to the list. Check your code.";
+					colorList.appendChild(errorMsg);
 				}
 			} catch (error) {
-				outputDiv.className = "alert alert-danger";
-				outputDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+				const errorMsg = document.createElement("li");
+				errorMsg.className = "list-group-item text-danger";
+				errorMsg.textContent = "Error: " + error.message;
+				colorList.appendChild(errorMsg);
 			}
-
-			outputDiv.style.display = "block";
 		});
-	}
 
-	if (exercise3ResetButton && colorPalette) {
-		exercise3ResetButton.addEventListener("click", function () {
-			colorPalette.innerHTML = "";
-			document.getElementById("exercise3-output").style.display = "none";
+	document
+		.getElementById("exercise3-reset")
+		.addEventListener("click", function () {
+			document.getElementById("color-list").innerHTML = "";
 		});
-	}
-
-	if (baseColor && colorPalette && typeof generateColorPalette === "function") {
-		baseColor.addEventListener("input", function () {
-			colorPalette.innerHTML = "";
-			generateColorPalette(baseColor.value);
-		});
-	}
 
 	// Format code blocks to prevent line wrapping
 	document.querySelectorAll(".code-block").forEach((block) => {
