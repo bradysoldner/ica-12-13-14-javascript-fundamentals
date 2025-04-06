@@ -588,180 +588,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-	// --- Practice Exercise 1: JSON & Objects ---
-	const exercise1RunButton = document.getElementById("exercise1-run");
-	const exercise1Input = document.getElementById("exercise1-input");
-	const exercise1Output = document.getElementById("exercise1-output");
-	const exercise1Result = document.getElementById("exercise1-result");
-
-	if (
-		exercise1RunButton &&
-		exercise1Input &&
-		exercise1Output &&
-		exercise1Result
-	) {
-		exercise1RunButton.addEventListener("click", function () {
-			try {
-				// Get and execute the user's code
-				const code = exercise1Input.value;
-				eval(code);
-
-				// Test if the transformProductData function exists
-				if (typeof transformProductData !== "function") {
-					throw new Error("The transformProductData function was not defined.");
-				}
-
-				// Call the function with the test data
-				const transformedProducts = transformProductData(rawProducts);
-
-				// Basic validation of the transformed data
-				const isValid =
-					Array.isArray(transformedProducts) &&
-					transformedProducts.length === rawProducts.length &&
-					transformedProducts.every(
-						(product) =>
-							typeof product.formattedPrice === "string" &&
-							product.formattedPrice.includes("$") &&
-							typeof product.stockStatus === "string"
-					);
-
-				if (!isValid) {
-					throw new Error(
-						"The transformed products are missing required properties."
-					);
-				}
-
-				// Display the results
-				exercise1Output.className = "alert alert-success";
-				exercise1Output.innerHTML =
-					"<strong>Great job!</strong> Your transformation function is working correctly.";
-				exercise1Output.style.display = "block";
-
-				exercise1Result.innerHTML = `
-          <h6>Original Products:</h6>
-          <pre class="bg-light p-3 rounded mb-3">${syntaxHighlight(
-						rawProducts
-					)}</pre>
-          <h6>Transformed Products:</h6>
-          <pre class="bg-light p-3 rounded">${syntaxHighlight(
-						transformedProducts
-					)}</pre>
-        `;
-			} catch (error) {
-				exercise1Output.className = "alert alert-danger";
-				exercise1Output.innerHTML = `<strong>Error:</strong> ${error.message}`;
-				exercise1Output.style.display = "block";
-				exercise1Result.innerHTML = "";
-			}
-		});
-	}
-
-	// --- Practice Exercise 2: Fetch & Async/Await ---
-	const exercise2RunButton = document.getElementById("exercise2-run");
-	const exercise2Input = document.getElementById("exercise2-input");
-	const exercise2Output = document.getElementById("exercise2-output");
-
-	if (exercise2RunButton && exercise2Input && exercise2Output) {
-		exercise2RunButton.addEventListener("click", function () {
-			try {
-				// Get and execute the user's code
-				const code = exercise2Input.value;
-				eval(code);
-
-				// Test if the fetchUserData function exists
-				if (typeof fetchUserData !== "function") {
-					throw new Error("The fetchUserData function was not defined.");
-				}
-
-				exercise2Output.className = "alert alert-success";
-				exercise2Output.innerHTML =
-					"<strong>Great job!</strong> Your code looks correct. Click the 'Fetch Data' button to test it.";
-				exercise2Output.style.display = "block";
-			} catch (error) {
-				exercise2Output.className = "alert alert-danger";
-				exercise2Output.innerHTML = `<strong>Error:</strong> ${error.message}`;
-				exercise2Output.style.display = "block";
-			}
-		});
-	}
-
-	// --- Practice Exercise 3: Data-Driven Styling ---
-	const exercise3RunButton = document.getElementById("exercise3-run");
-	const exercise3ResetButton = document.getElementById("exercise3-reset");
-	const exercise3Input = document.getElementById("exercise3-input");
-	const exercise3Output = document.getElementById("exercise3-output");
-	const gradesTable = document.getElementById("grades-table");
-
-	if (
-		exercise3RunButton &&
-		exercise3ResetButton &&
-		exercise3Input &&
-		exercise3Output &&
-		gradesTable
-	) {
-		// Save original table state for reset
-		const originalTableHTML = gradesTable.innerHTML;
-
-		exercise3RunButton.addEventListener("click", function () {
-			try {
-				// Get and execute the user's code
-				const code = exercise3Input.value;
-				eval(code);
-
-				// Test if the styleGradeTable function exists and call it
-				if (typeof styleGradeTable !== "function") {
-					throw new Error("The styleGradeTable function was not defined.");
-				}
-
-				styleGradeTable();
-
-				// Check if styling was applied
-				const gradeCells = document.querySelectorAll(".grade-cell");
-				const statusCells = document.querySelectorAll(".status-cell");
-				const averageCell = document.getElementById("average-grade");
-
-				let stylingApplied = false;
-
-				// Check if any style changes were made
-				gradeCells.forEach((cell) => {
-					if (cell.style.backgroundColor || cell.style.color) {
-						stylingApplied = true;
-					}
-				});
-
-				statusCells.forEach((cell) => {
-					if (cell.textContent !== "-") {
-						stylingApplied = true;
-					}
-				});
-
-				if (averageCell && averageCell.textContent !== "-") {
-					stylingApplied = true;
-				}
-
-				if (!stylingApplied) {
-					throw new Error(
-						"Your function didn't apply any styling to the table."
-					);
-				}
-
-				exercise3Output.className = "alert alert-success";
-				exercise3Output.innerHTML =
-					"<strong>Great job!</strong> Your data-driven styling has been applied to the table.";
-				exercise3Output.style.display = "block";
-			} catch (error) {
-				exercise3Output.className = "alert alert-danger";
-				exercise3Output.innerHTML = `<strong>Error:</strong> ${error.message}`;
-				exercise3Output.style.display = "block";
-			}
-		});
-
-		exercise3ResetButton.addEventListener("click", function () {
-			gradesTable.innerHTML = originalTableHTML;
-			exercise3Output.style.display = "none";
-		});
-	}
-
 	// Helper function for syntax highlighting JSON
 	function syntaxHighlight(json) {
 		if (typeof json !== "string") {
@@ -790,4 +616,146 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		);
 	}
+});
+
+
+// Validation for Exercise 1: Format Prices
+document.getElementById('exercise1-run').addEventListener('click', function() {
+    const code = document.getElementById('exercise1-input').value;
+    const outputDiv = document.getElementById('exercise1-output');
+    const resultDiv = document.getElementById('exercise1-result');
+    
+    try {
+        // Execute the code
+        eval(code);
+        
+        // Test if formatPrices exists and is a function
+        if (typeof formatPrices !== 'function') {
+            throw new Error('Please define a function named formatPrices');
+        }
+        
+        // Create a copy of the test data for safety
+        const testProducts = [
+            { id: 1, name: "Laptop", price: 999.99 },
+            { id: 2, name: "Smartphone", price: 499.50 },
+            { id: 3, name: "Headphones", price: 59.99 },
+            { id: 4, name: "Keyboard", price: 29 }
+        ];
+        
+        // Call the function
+        const formattedProducts = formatPrices(testProducts);
+        
+        // Check if function returns an array
+        if (!Array.isArray(formattedProducts)) {
+            throw new Error('Your function should return an array');
+        }
+        
+        // Check if all products have formattedPrice property
+        const allFormatted = formattedProducts.every(product => 
+            typeof product.formattedPrice === 'string' && 
+            product.formattedPrice.startsWith('$') &&
+            product.formattedPrice.includes('.')
+        );
+        
+        if (!allFormatted) {
+            throw new Error('Each product should have a formattedPrice property that starts with $ and has decimal places');
+        }
+        
+        // Check specific cases
+        const keyboardProduct = formattedProducts.find(p => p.name === "Keyboard");
+        if (keyboardProduct && keyboardProduct.formattedPrice !== "$29.00") {
+            throw new Error('Prices should have exactly 2 decimal places (Keyboard should be $29.00)');
+        }
+        
+        // Success!
+        outputDiv.className = 'alert alert-success';
+        outputDiv.innerHTML = '<strong>Great job!</strong> Your function correctly formats prices.';
+        outputDiv.style.display = 'block';
+        
+        // Display the results
+        resultDiv.innerHTML = `
+            <h5>Formatted Products:</h5>
+            <pre class="bg-light p-3">${JSON.stringify(formattedProducts, null, 2)}</pre>
+        `;
+        
+    } catch (error) {
+        outputDiv.className = 'alert alert-danger';
+        outputDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+        outputDiv.style.display = 'block';
+        resultDiv.innerHTML = '';
+    }
+});
+
+// Validation for Exercise 2: User Data Alert
+document.getElementById('exercise2-run').addEventListener('click', function() {
+    const code = document.getElementById('exercise2-input').value;
+    const outputDiv = document.getElementById('exercise2-output');
+    
+    // Save the original alert function
+    const originalAlert = window.alert;
+    let alertCalled = false;
+    let alertMessage = '';
+    
+    // Mock the alert function to capture calls
+    window.alert = function(message) {
+        alertCalled = true;
+        alertMessage = message;
+    };
+    
+    try {
+        // Execute the code
+        eval(code);
+        
+        // Test if displayUserData exists and is a function
+        if (typeof displayUserData !== 'function') {
+            throw new Error('Please define a function named displayUserData');
+        }
+        
+        // Call the function
+        displayUserData();
+        
+        // Check if alert was called
+        if (!alertCalled) {
+            throw new Error('Your function should call alert()');
+        }
+        
+        // Check if alert message contains required information
+        const hasName = alertMessage.includes('Leanne Graham');
+        const hasEmail = alertMessage.includes('leanne@example.com');
+        const hasCity = alertMessage.includes('New York');
+        
+        if (!hasName || !hasEmail || !hasCity) {
+            throw new Error('Your alert message should include the user\'s name, email, and city');
+        }
+        
+        // Success!
+        outputDiv.className = 'alert alert-success';
+        outputDiv.innerHTML = `
+            <strong>Great job!</strong> Your function correctly displays user data.<br>
+            <strong>Alert message:</strong> "${alertMessage}"
+        `;
+        outputDiv.style.display = 'block';
+        
+    } catch (error) {
+        outputDiv.className = 'alert alert-danger';
+        outputDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+        outputDiv.style.display = 'block';
+    } finally {
+        // Restore the original alert function
+        window.alert = originalAlert;
+    }
+});
+
+// Hook up the Display User button
+document.getElementById('display-user-button').addEventListener('click', function() {
+    try {
+        // If displayUserData exists, call it
+        if (typeof displayUserData === 'function') {
+            displayUserData();
+        } else {
+            alert('Please define the displayUserData function first');
+        }
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
 });
