@@ -109,7 +109,7 @@ This assignment focuses on creating a grocery list organizer tool that allows us
 
 ### Submission
 
-submission details and requirements coming soon!
+Accept the groceries assignment [here](https://classroom.github.com/a/6M8XojJe).
 
 ### Grading
 
